@@ -1,3 +1,4 @@
+import type { ExcludeNullFromValues } from "@/types/utility-types";
 import type { VariantProps } from "class-variance-authority";
 
 export type ThemeBrandColor = "primary" | "secondary" | "accent";
@@ -20,12 +21,10 @@ export const sizes = (classes: Record<ThemeSize, string>) => ({
   size: classes,
 });
 
-type A = keyof JSX.IntrinsicElements;
-
 export type ComponentProps<
-  RootElement extends A,
+  RootElement extends keyof JSX.IntrinsicElements,
   ClassGenerator extends (...params: any[]) => any,
   ExtraProps extends Record<string, unknown> = Record<never, never>
 > = JSX.IntrinsicElements[RootElement] &
-  VariantProps<ClassGenerator> &
+  ExcludeNullFromValues<VariantProps<ClassGenerator>> &
   ExtraProps;
