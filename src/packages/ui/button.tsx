@@ -6,41 +6,41 @@ import { forwardRef } from "react";
 
 export type ButtonVariant = "ghost" | "link" | "outline" | "glass";
 
-const buttonClassName = cva("btn", {
+const buttonClassName = cva("btn active:animate-pulse", {
   variants: {
     ...colorSchemes({
-      primary: "btn-primary",
-      accent: "btn-accent",
-      secondary: "btn-secondary",
-      error: "btn-error",
-      info: "btn-info",
-      success: "btn-success",
-      warning: "btn-warning",
+      primary: cx("btn-primary "),
+      accent: cx("btn-accent"),
+      secondary: cx("btn-secondary"),
+      error: cx("btn-error"),
+      info: cx("btn-info"),
+      success: cx("btn-success"),
+      warning: cx("btn-warning"),
     }),
     ...variants<ButtonVariant>({
-      ghost: "btn-ghost",
-      link: "btn-link",
-      outline: "btn-outline",
-      glass: "glass",
+      ghost: cx("btn-ghost"),
+      link: cx("btn-link"),
+      outline: cx("btn-outline"),
+      glass: cx("glass"),
     }),
     ...sizes({
-      xs: "btn-xs [&>svg]:size-4 gap-0.5",
-      sm: "btn-sm [&>svg]:size-5 gap-1",
-      md: "btn-md [&>svg]:size-6 gap-1.5",
-      lg: "btn-lg [&>svg]:size-7 gap-2",
+      xs: cx("btn-xs [&>svg]:size-4 gap-0.5"),
+      sm: cx("btn-sm [&>svg]:size-5 gap-1"),
+      md: cx("btn-md [&>svg]:size-6 gap-1.5"),
+      lg: cx("btn-lg [&>svg]:size-7 gap-2"),
     }),
     isLoading: {
-      true: "loading",
+      true: cx("loading"),
     },
     disabled: {
-      true: "btn-disabled",
+      true: cx("btn-disabled"),
     },
     noAnimation: {
-      true: "no-animation",
+      true: cx("no-animation"),
     },
     shape: {
-      square: "btn-square",
-      circle: "btn-circle",
+      square: cx("btn-square"),
+      circle: cx("btn-circle"),
     },
   },
   defaultVariants: {
