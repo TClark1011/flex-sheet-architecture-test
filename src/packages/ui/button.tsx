@@ -24,10 +24,10 @@ const buttonClassName = cva("btn", {
       glass: "glass",
     }),
     ...sizes({
-      lg: "btn-lg",
-      sm: "btn-sm",
-      xs: "btn-xs",
-      md: "btn-md",
+      xs: "btn-xs [&>svg]:size-4 gap-0.5",
+      sm: "btn-sm [&>svg]:size-5 gap-1",
+      md: "btn-md [&>svg]:size-6 gap-1.5",
+      lg: "btn-lg [&>svg]:size-7 gap-2",
     }),
     isLoading: {
       true: "loading",
@@ -43,20 +43,32 @@ const buttonClassName = cva("btn", {
       circle: "btn-circle",
     },
   },
+  defaultVariants: {
+    size: "md",
+  },
 });
 
 export type ButtonProps = PropsWithChildren<
-  ComponentProps<"button", typeof buttonClassName>
+  ComponentProps<
+    "button",
+    typeof buttonClassName,
+    {
+      leftIcon?: JSX.Element;
+      rightIcon?: JSX.Element;
+    }
+  >
 >;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ children, className, ...props }, ref) => (
+  ({ children, className, leftIcon, rightIcon, ...props }, ref) => (
     <button
       {...props}
       className={cx(buttonClassName(props), className)}
       ref={ref}
     >
-      {children}
+      {leftIcon}
+      <span>{children}</span>
+      {rightIcon}
     </button>
   )
 );
