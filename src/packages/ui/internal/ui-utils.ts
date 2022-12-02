@@ -1,5 +1,6 @@
-import type { ExcludeNullFromValues } from "@/types/utility-types";
+import type { ExcludeNullFromValues, EmptyObject } from "@/types/utility-types";
 import type { VariantProps } from "class-variance-authority";
+import type { Merge, Dictionary } from "ts-essentials";
 
 export type ThemeBrandColor = "primary" | "secondary" | "accent";
 export type ThemeStateColor = "success" | "warning" | "error" | "info";
@@ -24,7 +25,8 @@ export const sizes = (classes: Record<ThemeSize, string>) => ({
 export type ComponentProps<
   RootElement extends keyof JSX.IntrinsicElements,
   ClassGenerator extends (...params: any[]) => any,
-  ExtraProps extends Record<string, unknown> = Record<never, never>
-> = JSX.IntrinsicElements[RootElement] &
-  ExcludeNullFromValues<VariantProps<ClassGenerator>> &
-  ExtraProps;
+  ExtraProps extends Dictionary<any> = EmptyObject
+> = Merge<
+  JSX.IntrinsicElements[RootElement],
+  ExcludeNullFromValues<VariantProps<ClassGenerator>> & ExtraProps
+>;

@@ -1,0 +1,7 @@
+{
+  "directory": ["src/features", "src/packages"],
+  "location": "below",
+  "include": [".ts$", ".tsx$"],
+  "delete": true,
+  "exclude": ["stories", "internal"]
+}

@@ -2,7 +2,7 @@ import {
   FormControlProvider,
   useFormControl,
 } from "@/packages/ui/hooks/use-form-control";
-import type { ComponentProps } from "@/packages/ui/ui-utils";
+import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
 import type { PropsWithChildren } from "react";
 import { forwardRef } from "react";
@@ -33,17 +33,13 @@ export const FormControl = forwardRef<HTMLDivElement, FormControlProps>(
           className={cx(formControlClassNames(), props.className)}
           ref={ref}
         >
-          {label && (
+          {(label || errorMessage) && (
             <label htmlFor={inputId} className="label">
-              <span className="label-text">{label}</span>
-            </label>
-          )}
-          {children}
-          {errorMessage && (
-            <label className="label">
+              <span className="label-text mr-2">{label}</span>
               <span className="label-text-alt text-error">{errorMessage}</span>
             </label>
           )}
+          {children}
         </div>
       </FormControlProvider>
     );

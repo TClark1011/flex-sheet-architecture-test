@@ -19,6 +19,15 @@ module.exports = {
             height: value,
             width: value,
           }), 
+          hstack: (value) => ({
+            display: 'flex',
+            gap: value
+          }),
+          vstack: (value) => ({
+            display: 'flex',
+            flexDirection: 'column',
+            gap: value,
+          })
         },
         { values: theme('spacing') }
       )

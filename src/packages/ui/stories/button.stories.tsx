@@ -1,14 +1,18 @@
 import React from "react";
 import type { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Button } from "@/packages/ui/button";
+import { Button } from "@/packages/ui/components/button";
 import { IconPlus } from "@tabler/icons";
 
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
+const config: ComponentMeta<typeof Button> = {
   title: "Button",
   component: Button,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Button>;
+  args: {
+    variant: "solid",
+    size: "md",
+  },
+};
+
+export default config;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;

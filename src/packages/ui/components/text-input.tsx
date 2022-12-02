@@ -1,12 +1,10 @@
 import { useFormControlContext } from "@/packages/ui/hooks/use-form-control";
-import type { ComponentProps } from "@/packages/ui/ui-utils";
-import { sizes } from "@/packages/ui/ui-utils";
-import { variants } from "@/packages/ui/ui-utils";
-import { colorSchemes } from "@/packages/ui/ui-utils";
+import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
+import { variants, sizes, colorSchemes } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
 import { forwardRef, useEffect } from "react";
 
-export type TextInputVariants = "ghost" | "bordered";
+export type TextInputVariants = "ghost" | "solid";
 
 const textInputClassNames = cva("input", {
   variants: {
@@ -26,15 +24,19 @@ const textInputClassNames = cva("input", {
       lg: cx("input-lg"),
     }),
     ...variants<TextInputVariants>({
-      bordered: cx("input-bordered"),
+      solid: "", // solid is default so we don't need any extra classes
       ghost: cx("input-ghost"),
     }),
     hasError: {
       true: cx("input-error"),
     },
+    bordered: {
+      true: cx("input-bordered"),
+    },
   },
   defaultVariants: {
-    variant: "bordered",
+    variant: "solid",
+    size: "md",
   },
 });
 
@@ -44,7 +46,7 @@ export type TextInputProps = ComponentProps<
 >;
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, size, variant, bordered, hasError, ...props }, ref) => {
     const formControlProps = useFormControlContext();
 
     useEffect(() => {
@@ -57,11 +59,13 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <input
         {...props}
         ref={ref}
-        id={formControlProps?.inputId ?? props.id}
+        id={props.id ?? formControlProps?.inputId}
         className={cx(
           textInputClassNames({
-            hasError: !!formControlProps?.errorMessage,
-            ...props,
+            hasError: hasError ?? !!formControlProps?.errorMessage,
+            size,
+            variant,
+            bordered,
           }),
           className
         )}
