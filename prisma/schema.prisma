@@ -78,6 +78,7 @@ model Note {
   updatedAt          DateTime     @updatedAt
   title              String
   content            String
+  public             Boolean
   authorUserId       String?
   author             User?        @relation(fields: [authorUserId], references: [id], onDelete: Cascade)
   allowedViewerUsers NoteOnUser[]
