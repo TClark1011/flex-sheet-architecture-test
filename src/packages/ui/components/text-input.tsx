@@ -46,26 +46,30 @@ export type TextInputProps = ComponentProps<
 >;
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  ({ className, size, variant, bordered, hasError, ...props }, ref) => {
-    const formControlProps = useFormControlContext();
+  (
+    { className, size, variant, bordered, hasError, colorScheme, ...props },
+    ref
+  ) => {
+    const { inputId, setInputId, errorMessage } = useFormControlContext();
 
     useEffect(() => {
-      if (props.id && formControlProps) {
-        formControlProps.setInputId(props.id);
+      if (props.id !== undefined) {
+        setInputId(props.id);
       }
-    }, [props.id, formControlProps]);
+    }, [props.id, setInputId]);
 
     return (
       <input
         {...props}
         ref={ref}
-        id={props.id ?? formControlProps?.inputId}
+        id={inputId}
         className={cx(
           textInputClassNames({
-            hasError: hasError ?? !!formControlProps?.errorMessage,
+            hasError: hasError ?? errorMessage !== undefined,
             size,
             variant,
             bordered,
+            colorScheme,
           }),
           className
         )}

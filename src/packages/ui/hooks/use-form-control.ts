@@ -11,5 +11,16 @@ export const useFormControl = ({ errorMessage }: UseFormControlParam) => {
   return { inputId, setInputId, errorMessage };
 };
 
-export const [FormControlProvider, _, useFormControlContext] =
+const [FormControlProvider, , useBaseFormControlContext] =
   createConvenientContext<ReturnType<typeof useFormControl>>();
+
+export { FormControlProvider };
+
+export const useFormControlContext = () => {
+  const data = useBaseFormControlContext();
+  const fallback = useFormControl({});
+
+  if (!data) return fallback;
+
+  return data;
+};

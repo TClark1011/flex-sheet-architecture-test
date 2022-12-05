@@ -113,6 +113,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       noAnimation,
       disabled,
       isLoading,
+      colorScheme,
       ...props
     },
     ref
@@ -129,6 +130,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             noAnimation,
             disabled,
             isLoading,
+            colorScheme,
           }),
           className
         )}
