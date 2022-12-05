@@ -51,7 +51,7 @@ export const SignInView: FC = () => {
               <FormControl
                 label="Email"
                 errorMessage={formState.errors.email?.message}
-                className="mb-2"
+                className="mb-8"
               >
                 <TextInput {...register("email")} placeholder="Enter Email" />
               </FormControl>
@@ -60,12 +60,13 @@ export const SignInView: FC = () => {
                   type="submit"
                   colorScheme="primary"
                   isLoading={formState.isSubmitting}
-                  className="mb-2 w-full"
+                  className="w-full"
                 >
                   Submit
                 </Button>
               </div>
             </form>
+            <div className="divider">OR</div>
             <div className="vstack-2">
               {externalAuthProviders.map((provider) => (
                 <ExternalAuthButton key={provider.name} provider={provider} />
