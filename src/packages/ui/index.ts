@@ -4,5 +4,6 @@
 
 export * from "./components/button";
 export * from "./components/form-control";
+export * from "./components/navbar";
 export * from "./components/text-input";
 export * from "./hooks/use-form-control";

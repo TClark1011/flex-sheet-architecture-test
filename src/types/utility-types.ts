@@ -11,3 +11,7 @@ export type WithSession = {
   // For some reason NextJS has bugs when you try to pass
   // a prop named just "session" via SSR.
 };
+
+export type WithClassName = {
+  className?: string;
+};

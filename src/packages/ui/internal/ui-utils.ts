@@ -8,7 +8,9 @@ export type ThemeColor = ThemeBrandColor | ThemeStateColor;
 
 export type ThemeSize = "xs" | "sm" | "md" | "lg";
 
-export const colorSchemes = (classes: Record<ThemeColor, string>) => ({
+export const colorSchemes = <ExtraColors extends string>(
+  classes: Record<ThemeColor | ExtraColors, string>
+) => ({
   colorScheme: classes,
 });
 

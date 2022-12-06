@@ -7,6 +7,7 @@ import { zNonEmptyString } from "@/utils/utility-schemas";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { externalAuthProviders } from "@/features/auth/constants/external-auth-providers";
 import { ExternalAuthButton } from "@/features/auth/components/ExternalAuthButton";
+import { useCallbackUrl } from "@/hooks/useCallbackUrl";
 
 const signInFormSchema = z.object({
   email: zNonEmptyString().email(),
@@ -14,6 +15,7 @@ const signInFormSchema = z.object({
 
 export const SignInView: FC = () => {
   const { data: session } = useSession();
+  const callbackUrl = useCallbackUrl();
   const { register, handleSubmit, formState } = useForm<
     z.infer<typeof signInFormSchema>
   >({
@@ -37,7 +39,7 @@ export const SignInView: FC = () => {
               onSubmit={handleSubmit(async ({ email }) => {
                 const result = await signIn("email", {
                   email,
-                  redirect: false,
+                  callbackUrl,
                 });
                 if (!result) {
                   throw new Error("No Response");
