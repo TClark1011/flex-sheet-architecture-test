@@ -9,11 +9,10 @@ export type RootLayoutProps = PropsWithChildren & WithClassName;
 export const RootLayout: FC<RootLayoutProps> = ({ children, className }) => {
   const { status: sessionStatus } = useSession();
   return (
-    <main className="min-h-screen w-screen">
+    <main className="flex min-h-screen w-screen flex-col">
       <Navbar
         colorScheme="primary"
         startContent={<Link href="/">Home</Link>}
-        className={cx("mb-4", className)}
         endContent={
           <>
             {sessionStatus === "unauthenticated" && (
@@ -38,7 +37,7 @@ export const RootLayout: FC<RootLayoutProps> = ({ children, className }) => {
           </>
         }
       />
-      {children}
+      <div className={cx("flex-grow pt-4", className)}>{children}</div>
     </main>
   );
 };
