@@ -5,6 +5,9 @@ import { Toggle } from "@/packages/ui/components/toggle";
 const config: ComponentMeta<typeof Toggle> = {
   title: "Toggle",
   component: Toggle,
+  args: {
+    disabled: false,
+  },
 };
 
 export default config;
