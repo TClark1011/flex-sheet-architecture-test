@@ -7,4 +7,5 @@ export * from "./components/form-control";
 export * from "./components/navbar";
 export * from "./components/swap";
 export * from "./components/text-input";
+export * from "./components/toggle";
 export * from "./hooks/use-form-control";
