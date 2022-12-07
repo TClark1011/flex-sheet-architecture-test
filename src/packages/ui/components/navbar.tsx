@@ -1,8 +1,8 @@
 import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
 import { colorSchemes } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
-import type { FC, PropsWithChildren } from "react";
-import type {} from "ts-essentials";
+import type { PropsWithChildren } from "react";
+import { forwardRef } from "react";
 
 const navbarClassName = cva("navbar", {
   variants: {
@@ -28,19 +28,30 @@ export type NavbarProps = ComponentProps<
   }
 >;
 
-export const Navbar: FC<NavbarProps> = ({
-  colorScheme,
-  children,
-  className,
-  startContent,
-  centerContent,
-  endContent,
-  ...props
-}) => (
-  <div className={cx(navbarClassName({ colorScheme }), className)} {...props}>
-    {startContent && <div className="navbar-start">{startContent}</div>}
-    {centerContent && <div className="navbar-center">{centerContent}</div>}
-    {endContent && <div className="navbar-end">{endContent}</div>}
-    {children}
-  </div>
+export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(
+  (
+    {
+      colorScheme,
+      children,
+      className,
+      startContent,
+      centerContent,
+      endContent,
+      ...props
+    },
+    ref
+  ) => (
+    <div
+      ref={ref}
+      className={cx(navbarClassName({ colorScheme }), className)}
+      {...props}
+    >
+      {startContent && <div className="navbar-start">{startContent}</div>}
+      {centerContent && <div className="navbar-center">{centerContent}</div>}
+      {endContent && <div className="navbar-end">{endContent}</div>}
+      {children}
+    </div>
+  )
 );
+
+Navbar.displayName = "Navbar";

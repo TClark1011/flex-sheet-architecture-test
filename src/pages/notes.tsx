@@ -1,11 +1,21 @@
 import { UserNotesView } from "@/features/notes";
-import { simpleProtectedGetServerSideProps } from "@/utils/ssr-utils";
-import type { InferGetServerSidePropsType, NextPage } from "next";
+import { createProtectedGetServerSideProps } from "@/utils/ssr-utils";
+import type { NextPage } from "next";
+import type { StandardGetServerSidePropsWithPrefetch } from "@/types/utility-types";
+import { createTRPCServerHelpers } from "@/server/trpc/server-helpers";
 
-export const getServerSideProps = simpleProtectedGetServerSideProps;
+export const getServerSideProps = createProtectedGetServerSideProps(
+  async (_, context) => {
+    const trpcClient = await createTRPCServerHelpers(context);
 
-const NotesPage: NextPage<
-  InferGetServerSidePropsType<typeof getServerSideProps>
-> = UserNotesView;
+    await trpcClient.note.getCurrentUserNotes.prefetch();
+
+    return {
+      trpcState: trpcClient.dehydrate(),
+    };
+  }
+) satisfies StandardGetServerSidePropsWithPrefetch;
+
+const NotesPage: NextPage = UserNotesView;
 
 export default NotesPage;

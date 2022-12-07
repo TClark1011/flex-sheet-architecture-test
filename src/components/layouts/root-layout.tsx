@@ -37,7 +37,7 @@ export const RootLayout: FC<RootLayoutProps> = ({ children, className }) => {
           </>
         }
       />
-      <div className={cx("flex-grow pt-4", className)}>{children}</div>
+      <div className={cx("flex-grow px-4 pt-4", className)}>{children}</div>
     </main>
   );
 };

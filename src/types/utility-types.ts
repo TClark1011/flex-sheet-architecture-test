@@ -1,3 +1,5 @@
+import type { DehydratedState } from "@tanstack/react-query";
+import type { GetServerSideProps } from "next";
 import type { Session } from "next-auth";
 
 export type ExcludeNullFromValues<T> = {
@@ -15,3 +17,7 @@ export type WithSession = {
 export type WithClassName = {
   className?: string;
 };
+
+export type StandardGetServerSidePropsWithPrefetch = GetServerSideProps<{
+  trpcState: DehydratedState;
+}>;

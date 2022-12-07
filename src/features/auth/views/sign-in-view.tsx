@@ -7,7 +7,7 @@ import { zNonEmptyString } from "@/utils/utility-schemas";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { externalAuthProviders } from "@/features/auth/constants/external-auth-providers";
 import { ExternalAuthButton } from "@/features/auth/components/ExternalAuthButton";
-import { useCallbackUrl } from "@/hooks/useCallbackUrl";
+import { useCallbackUrl } from "@/hooks/use-callback-url";
 
 const signInFormSchema = z.object({
   email: zNonEmptyString().email(),

@@ -27,6 +27,10 @@ module.exports = {
             display: 'flex',
             flexDirection: 'column',
             gap: value,
+          }),
+          container: (value) => ({
+            width: '100%',
+            maxWidth: value
           })
         },
         { values: theme('spacing') }

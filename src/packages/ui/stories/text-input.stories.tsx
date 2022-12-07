@@ -5,13 +5,6 @@ import { TextInput } from "@/packages/ui/components/text-input";
 const config: ComponentMeta<typeof TextInput> = {
   title: "TextInput",
   component: TextInput,
-  args: {
-    // size: "md",
-    // variant: "solid",
-    // bordered: false,
-    // hasError: false,
-    
-  },
 };
 export default config;
 
