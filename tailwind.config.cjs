@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require("tailwindcss/plugin");
 
+const defaultDaisyUiLightTheme = require("daisyui/src/colors/themes")["[data-theme=light]"];
+const defaultDaisyUiDarkTheme = require("daisyui/src/colors/themes")["[data-theme=dark]"];
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -36,5 +39,16 @@ module.exports = {
         { values: theme('spacing') }
       )
     })
-  ]
+  ],
+  daisyui: {themes: [
+    {
+      light: {
+        ...defaultDaisyUiLightTheme,
+        neutral: defaultDaisyUiLightTheme["base-200"],
+        "neutral-focus":  defaultDaisyUiLightTheme["base-300"],
+        "neutral-content": defaultDaisyUiLightTheme["base-content"]
+      },
+      dark: defaultDaisyUiDarkTheme,
+    },
+  ],}
 };
