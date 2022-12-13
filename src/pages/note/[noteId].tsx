@@ -8,7 +8,13 @@ export const getServerSideProps = (async (context) => {
   const trpcClient = await createTRPCServerHelpers(context);
   const { noteId } = notePageParamSchema.parse(context.params);
 
-  await trpcClient.note.getNote.prefetch({ noteId });
+  try {
+    await trpcClient.note.getNote.fetch({ noteId });
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

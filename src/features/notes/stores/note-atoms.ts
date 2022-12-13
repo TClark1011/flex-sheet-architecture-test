@@ -1,5 +1,6 @@
 import { FULL_NOTE_STUB } from "@/constants/stubs";
 import { createAtom, createSelectorAtom } from "$jotai";
+import type { ContentPermission } from "@/types/utility-types";
 
 export const noteAtom = createAtom(FULL_NOTE_STUB);
 export const noteIdSelectorAtom = createSelectorAtom(
@@ -21,6 +22,12 @@ export const noteIsPublicSelectorAtom = createSelectorAtom(
 export const noteTagsSelectorAtom = createSelectorAtom(
   noteAtom,
   (note) => note.tags
+);
+
+export const notePermissionAtom = createAtom<ContentPermission>("view");
+export const userCanEditNoteSelectorAtom = createSelectorAtom(
+  notePermissionAtom,
+  (permission) => permission === "edit"
 );
 
 export const tagIdTargetedForDeleteAtom = createAtom<string | null>(null);

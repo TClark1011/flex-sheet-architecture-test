@@ -2,6 +2,7 @@ import { useSaveNoteMutation } from "@/features/notes/hooks/note-mutation-hooks"
 import {
   noteIdSelectorAtom,
   noteTitleSelectorAtom,
+  userCanEditNoteSelectorAtom,
 } from "@/features/notes/stores/note-atoms";
 import { useInputState } from "@/hooks/use-input-state";
 import { Swap, TextInput } from "$ui";
@@ -17,6 +18,7 @@ const useNoteTitleEdit = () => {
   const { mutateAsync: saveNote, isLoading: noteIsSaving } =
     useSaveNoteMutation();
 
+  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
   const noteId = useAtomValue(noteIdSelectorAtom);
   const noteTitle = useAtomValue(noteTitleSelectorAtom);
 
@@ -34,7 +36,7 @@ const useNoteTitleEdit = () => {
   return {
     inputProps: {
       ...inputStateProps,
-      readOnly: !titleIsEditable,
+      readOnly: !titleIsEditable || !userCanEditNote,
       disabled: noteIsSaving,
     },
     onSave,
@@ -60,20 +62,24 @@ export const NoteTitleEdit: FC<WithClassName> = ({ className }) => {
   const { inputProps, editableCheckboxProps, titleIsEditable } =
     useNoteTitleEdit();
 
+  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
+
   return (
     <div className={cx("items-center hstack-2", className)}>
-      <Swap
-        {...editableCheckboxProps}
-        on={<IconDeviceFloppy />}
-        off={<IconPencil />}
-      />
+      {userCanEditNote && (
+        <Swap
+          {...editableCheckboxProps}
+          on={<IconDeviceFloppy />}
+          off={<IconPencil />}
+        />
+      )}
       <TextInput
         {...inputProps}
         aria-label="Note Title"
         placeholder="Enter Note Title"
         bordered={titleIsEditable}
         variant={titleIsEditable ? "solid" : "ghost"}
-        className="text-xl font-bold"
+        className="w-64 text-xl font-bold"
       />
     </div>
   );

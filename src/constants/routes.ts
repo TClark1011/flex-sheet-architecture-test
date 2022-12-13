@@ -1,4 +1,4 @@
 export const routes = {
   noteList: "/notes",
-  note: (noteId: string) => `/notes/${noteId}`,
+  note: (noteId: string) => `/note/${noteId}`,
 };

@@ -4,6 +4,7 @@ import {
   router,
 } from "@/server/trpc/trpc";
 import type { FullNote } from "@/types/extra-entity-types";
+import type { ContentPermission } from "@/types/utility-types";
 import type { Note, Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -15,6 +16,11 @@ const throwIfUserCanNotEditNote = (note: Note, userId: string | undefined) => {
       message: "You are not authorized to edit this note",
     });
   }
+};
+
+type GetNoteResult = {
+  permission: ContentPermission;
+  note: FullNote;
 };
 
 // Just the props we when we show the list  of notes
@@ -33,8 +39,7 @@ export const noteRouter = router({
   ),
   getNote: publicProcedure
     .input(z.object({ noteId: z.string() }))
-    .query(async ({ ctx, input }): Promise<FullNote> => {
-      console.log("(note-router) input: ", input);
+    .query(async ({ ctx, input }): Promise<GetNoteResult> => {
       const note = await ctx.prisma.note.findUniqueOrThrow({
         where: {
           id: input.noteId,
@@ -56,7 +61,10 @@ export const noteRouter = router({
         });
       }
 
-      return note;
+      return {
+        permission: userIsAuthor ? "edit" : "view",
+        note,
+      };
     }),
   createNewNote: publicProcedure.mutation(
     ({ ctx }): Promise<Note> =>

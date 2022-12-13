@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 type BadgeVariant = "solid" | "outline" | "ghost";
 
-const badgeClassNames = cva("badge [&>svg]:w-max [&>svg]:mr-1", {
+const badgeClassNames = cva("badge [&>svg]:mr-1", {
   variants: {
     ...colorSchemes({
       primary: cx("badge-primary"),

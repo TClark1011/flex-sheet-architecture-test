@@ -3,6 +3,7 @@ import {
   noteIdSelectorAtom,
   noteTagsSelectorAtom,
   tagIdTargetedForDeleteAtom,
+  userCanEditNoteSelectorAtom,
 } from "@/features/notes/stores/note-atoms";
 import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 import { useRenderLogger } from "@/hooks/use-render-logger";
@@ -51,6 +52,7 @@ const useNewTagForm = () => {
 export const NoteTagsEdit: FC<WithClassName> = ({ className }) => {
   useRenderLogger("NoteTagsEdit");
 
+  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
   const setTagIdTargetedForDelete = useUpdateAtom(tagIdTargetedForDeleteAtom);
   const tags = useAtomValue(noteTagsSelectorAtom);
   const { register, onSubmit, showLoader, formState } = useNewTagForm();
@@ -58,7 +60,7 @@ export const NoteTagsEdit: FC<WithClassName> = ({ className }) => {
   return (
     <div
       className={cx(
-        "flex w-full flex-col gap-2 rounded-md border border-base-content p-2",
+        "flex w-full flex-col justify-start gap-2 rounded-md border border-base-content p-2",
         className
       )}
     >
@@ -72,7 +74,7 @@ export const NoteTagsEdit: FC<WithClassName> = ({ className }) => {
               onClick={() => setTagIdTargetedForDelete(tag.id)}
               className="cursor-pointer"
               tabIndex={0}
-              icon={<IconX />}
+              icon={userCanEditNote ? <IconX /> : <></>}
               key={tag.id}
             >
               {tag.name}
@@ -80,19 +82,21 @@ export const NoteTagsEdit: FC<WithClassName> = ({ className }) => {
           ))}
         </div>
       )}
-      <form className="input-group ml-auto w-max" onSubmit={onSubmit}>
-        <TextInput
-          size="sm"
-          aria-label="enter new tag text"
-          variant="solid"
-          placeholder="Add Tag"
-          disabled={formState.isSubmitting}
-          {...register("tagText")}
-        />
-        <Button shape="circle" size="sm" type="submit" disabled={showLoader}>
-          <IconPlus />
-        </Button>
-      </form>
+      {userCanEditNote && (
+        <form className="input-group ml-auto w-max" onSubmit={onSubmit}>
+          <TextInput
+            size="sm"
+            aria-label="enter new tag text"
+            variant="solid"
+            placeholder="Add Tag"
+            disabled={formState.isSubmitting}
+            {...register("tagText")}
+          />
+          <Button shape="circle" size="sm" type="submit" disabled={showLoader}>
+            <IconPlus />
+          </Button>
+        </form>
+      )}
     </div>
   );
 };

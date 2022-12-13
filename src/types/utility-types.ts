@@ -27,3 +27,5 @@ export type StandardGetServerSidePropsWithPrefetch = GetServerSideProps<{
 
 export type StringThatIncludes<Substring extends string> =
   `${string}${Substring}${string}`;
+
+export type ContentPermission = "edit" | "view";

@@ -1,5 +1,5 @@
-import { FULL_NOTE_STUB } from "@/constants/stubs";
 import { trpc } from "@/utils/trpc";
+import { A, D } from "@mobily/ts-belt";
 import produce from "immer";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
@@ -60,9 +60,10 @@ export const useSaveNoteMutation: typeof trpc.note.saveNote.useMutation = (
         {
           noteId: newData.id,
         },
-        (previousData) => ({
-          ...(previousData ?? FULL_NOTE_STUB),
-          ...newData,
+        produce((draftResult) => {
+          if (draftResult?.note) {
+            draftResult.note = D.merge(draftResult.note, newData);
+          }
         })
       );
       // We insert the newly mutated note data into the
@@ -88,10 +89,11 @@ export const useCreateTagMutation: typeof trpc.note.addTagToNote.useMutation = (
         {
           noteId: input.noteId,
         },
-        (previousData = FULL_NOTE_STUB) =>
-          produce(previousData, (draftNote) => {
-            draftNote.tags.push(addedTag);
-          })
+        produce((result) => {
+          if (result?.note) {
+            result.note.tags.push(addedTag);
+          }
+        })
       );
       // We insert the newly mutated note data into the
       // the data for the query that fetches that note
@@ -115,12 +117,14 @@ export const useDeleteTagMutation: typeof trpc.note.removeTagFromNote.useMutatio
           {
             noteId: input.noteId,
           },
-          (previousData = FULL_NOTE_STUB) =>
-            produce(previousData, (draftNote) => {
-              draftNote.tags = draftNote.tags.filter(
-                (tag) => tag.id !== removedTag.id
+          produce((result) => {
+            if (result?.note) {
+              result.note.tags = A.reject(
+                result.note.tags,
+                (tag) => tag.id === removedTag.id
               );
-            })
+            }
+          })
         );
         // We insert the newly mutated note data into the
         // the data for the query that fetches that note

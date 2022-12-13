@@ -2,6 +2,7 @@ import { useSaveNoteMutation } from "@/features/notes/hooks/note-mutation-hooks"
 import {
   noteContentSelectorAtom,
   noteIdSelectorAtom,
+  userCanEditNoteSelectorAtom,
 } from "@/features/notes/stores/note-atoms";
 import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 import { useRenderLogger } from "@/hooks/use-render-logger";
@@ -55,6 +56,8 @@ const useNoteContentEditForm = () => {
 export const NoteContentEdit: FC<WithClassName> = ({ className }) => {
   useRenderLogger("NoteContentEdit");
 
+  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
+
   const { onSubmit, register, formState } = useNoteContentEditForm();
   const showLoader = useLoadingStateDebounce(formState.isSubmitting);
   const contentHasNotBeenChanged = !formState.isDirty;
@@ -64,24 +67,30 @@ export const NoteContentEdit: FC<WithClassName> = ({ className }) => {
   return (
     <>
       <form className={cx("flex flex-col", className)} onSubmit={onSubmit}>
-        <Textarea {...register("content")} className="mb-2 w-full" />
-        <div className="flex justify-between">
-          <Button
-            colorScheme="error"
-            variant="ghost"
-            onClick={deleteModalProps.onOpen}
-          >
-            Delete
-          </Button>
-          <Button
-            colorScheme="primary"
-            type="submit"
-            isLoading={showLoader}
-            disabled={contentHasNotBeenChanged}
-          >
-            Save
-          </Button>
-        </div>
+        <Textarea
+          {...register("content")}
+          className="mb-2 w-full"
+          readOnly={!userCanEditNote}
+        />
+        {userCanEditNote && (
+          <div className="flex justify-between">
+            <Button
+              colorScheme="error"
+              variant="ghost"
+              onClick={deleteModalProps.onOpen}
+            >
+              Delete
+            </Button>
+            <Button
+              colorScheme="primary"
+              type="submit"
+              isLoading={showLoader}
+              disabled={contentHasNotBeenChanged}
+            >
+              Save
+            </Button>
+          </div>
+        )}
       </form>
 
       <DeleteCurrentNoteModal {...deleteModalProps} />
