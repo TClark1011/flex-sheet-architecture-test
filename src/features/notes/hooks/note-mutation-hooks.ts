@@ -15,12 +15,34 @@ export const useCreateNoteMutation: typeof trpc.note.createNewNote.useMutation =
         return options?.onError?.(...params);
       },
       onSuccess: async (data, ...otherParams) => {
-        const result = options?.onSuccess?.(data, ...otherParams);
+        const result = await options?.onSuccess?.(data, ...otherParams);
         await push(`note/${data.id}`);
         return result;
       },
     });
   };
+
+export const useDeleteNoteMutation: typeof trpc.note.deleteNote.useMutation = (
+  options
+) => {
+  const trpcHelpers = trpc.useContext();
+  return trpc.note.deleteNote.useMutation({
+    ...options,
+    onError: (...params) => {
+      toast.error("Unable to delete note");
+      return options?.onError?.(...params);
+    },
+    onSuccess: (data, ...params) => {
+      trpcHelpers.note.getCurrentUserNotes.setData(
+        undefined,
+        (currentNotes = []) =>
+          currentNotes.filter((note) => note.id !== data.id)
+      );
+      // We remove the deleted note from the data for the query that fetches all notes
+      return options?.onSuccess?.(data, ...params);
+    },
+  });
+};
 
 export const useSaveNoteMutation: typeof trpc.note.saveNote.useMutation = (
   options

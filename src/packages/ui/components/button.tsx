@@ -53,37 +53,37 @@ const buttonClassName = cva("btn", {
     // out of the box, so we manually add the styles here
     {
       colorScheme: "primary",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-primary"),
     },
     {
       colorScheme: "accent",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-accent"),
     },
     {
       colorScheme: "secondary",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-secondary"),
     },
     {
       colorScheme: "error",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-error"),
     },
     {
       colorScheme: "info",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-info"),
     },
     {
       colorScheme: "success",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-success"),
     },
     {
       colorScheme: "warning",
-      variant: "link",
+      variant: ["ghost", "link"],
       className: cx("text-warning"),
     },
   ],
@@ -120,6 +120,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <button
+        type="button"
         {...props}
         disabled={disabled}
         className={cx(

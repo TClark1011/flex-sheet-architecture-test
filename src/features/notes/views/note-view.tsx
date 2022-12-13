@@ -1,7 +1,7 @@
 import { RootLayout } from "@/components/layouts/root-layout";
 import type { FC } from "react";
 import { DeleteTagModal } from "@/features/notes/components/modals/delete-tag-modal";
-import { NoteContentEdit } from "@/features/notes/components/note-content-edit";
+import { NoteContentEdit } from "@/features/notes/components/note-content-edit-delete";
 import { NoteTitleEdit } from "@/features/notes/components/note-title-edit";
 import { NotePublicToggle } from "@/features/notes/components/note-public-toggle";
 import { NoteTagsEdit } from "@/features/notes/components/note-tags-edit";

@@ -1,8 +1,13 @@
 import type { ChangeEvent } from "react";
+import { useEffect } from "react";
 import { useState, useCallback } from "react";
 
 export const useInputState = (initialValue = "") => {
   const [inputState, setInputState] = useState(initialValue);
+
+  useEffect(() => {
+    setInputState(initialValue);
+  }, [initialValue]);
 
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -26,6 +31,10 @@ export const useCheckboxState = (initialState = false) => {
 
     setIsChecked(newState);
   }, []);
+
+  useEffect(() => {
+    setIsChecked(initialState);
+  }, [initialState]);
 
   const checkboxProps = {
     onChange,

@@ -5,7 +5,7 @@ import {
 } from "@/features/notes/stores/note-atoms";
 import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 import { useRenderLogger } from "@/hooks/use-render-logger";
-import { Button, Textarea } from "@/packages/ui";
+import { Button, Textarea, useDisclosureState } from "$ui";
 import type { WithClassName } from "@/types/utility-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cx } from "class-variance-authority";
@@ -13,6 +13,7 @@ import { useAtomValue } from "jotai";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { DeleteCurrentNoteModal } from "@/features/notes/components/modals/delete-current-note-modal";
 
 const noteContentEditFormSchema = z.object({
   content: z.string(),
@@ -58,20 +59,32 @@ export const NoteContentEdit: FC<WithClassName> = ({ className }) => {
   const showLoader = useLoadingStateDebounce(formState.isSubmitting);
   const contentHasNotBeenChanged = !formState.isDirty;
 
+  const deleteModalProps = useDisclosureState();
+
   return (
-    <form
-      className={cx("flex flex-col items-end", className)}
-      onSubmit={onSubmit}
-    >
-      <Textarea {...register("content")} className="mb-2 w-full" />
-      <Button
-        colorScheme="primary"
-        type="submit"
-        isLoading={showLoader}
-        disabled={contentHasNotBeenChanged}
-      >
-        Save
-      </Button>
-    </form>
+    <>
+      <form className={cx("flex flex-col", className)} onSubmit={onSubmit}>
+        <Textarea {...register("content")} className="mb-2 w-full" />
+        <div className="flex justify-between">
+          <Button
+            colorScheme="error"
+            variant="ghost"
+            onClick={deleteModalProps.onOpen}
+          >
+            Delete
+          </Button>
+          <Button
+            colorScheme="primary"
+            type="submit"
+            isLoading={showLoader}
+            disabled={contentHasNotBeenChanged}
+          >
+            Save
+          </Button>
+        </div>
+      </form>
+
+      <DeleteCurrentNoteModal {...deleteModalProps} />
+    </>
   );
 };

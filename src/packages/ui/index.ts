@@ -11,4 +11,5 @@ export * from "./components/swap";
 export * from "./components/text-input";
 export * from "./components/textarea";
 export * from "./components/toggle";
+export * from "./hooks/use-disclosure-state";
 export * from "./hooks/use-form-control";

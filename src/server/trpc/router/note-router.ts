@@ -69,6 +69,24 @@ export const noteRouter = router({
         },
       })
   ),
+  deleteNote: protectedProcedure
+    .input(z.object({ noteId: z.string() }))
+    .mutation(async ({ ctx, input }): Promise<Note> => {
+      const note = await ctx.prisma.note.findFirstOrThrow({
+        where: {
+          id: input.noteId,
+          authorUserId: ctx.session.user.id,
+        },
+      });
+      // Will throw an error if user is not the author
+      // of the target note
+
+      return ctx.prisma.note.delete({
+        where: {
+          id: note.id,
+        },
+      });
+    }),
   saveNote: publicProcedure
     .input(
       z.object({

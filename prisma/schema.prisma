@@ -70,5 +70,5 @@ model Tag {
   id     String @id @default(cuid())
   name   String @unique
   noteId String
-  note   Note   @relation(fields: [noteId], references: [id])
+  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade)
 }
