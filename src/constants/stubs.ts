@@ -1,7 +1,7 @@
 import type { FullNote } from "@/types/extra-entity-types";
 import type { Note, User } from "@prisma/client";
 
-export const STUB_USER: User = {
+export const USER_STUB: User = {
   email: "",
   emailVerified: null,
   id: "",
@@ -22,5 +22,5 @@ export const NOTE_STUB: Note = {
 export const FULL_NOTE_STUB: FullNote = {
   ...NOTE_STUB,
   author: null,
-  allowedViewerUsers: [],
+  tags: [],
 };

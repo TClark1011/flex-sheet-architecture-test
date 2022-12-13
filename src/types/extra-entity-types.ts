@@ -9,6 +9,6 @@ export type NoteWithAuthor = Prisma.NoteGetPayload<{
 export type FullNote = Prisma.NoteGetPayload<{
   include: {
     author: true;
-    allowedViewerUsers: true;
+    tags: true;
   };
 }>;

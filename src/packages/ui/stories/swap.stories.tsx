@@ -5,6 +5,9 @@ import { Swap } from "@/packages/ui/components/swap";
 const config: ComponentMeta<typeof Swap> = {
   title: "Swap",
   component: Swap,
+  args: {
+    disabled: false,
+  },
 };
 export default config;
 

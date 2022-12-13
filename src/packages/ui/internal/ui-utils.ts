@@ -6,6 +6,8 @@ import type {
 import type { VariantProps } from "class-variance-authority";
 import type { Merge, Dictionary } from "ts-essentials";
 
+type ClassNameRecord<Keys extends string> = Record<Keys, string>;
+
 export type ThemeBrandColor = "primary" | "secondary" | "accent";
 export type ThemeStateColor = "success" | "warning" | "error" | "info";
 export type ThemeColor = ThemeBrandColor | ThemeStateColor;
@@ -20,11 +22,35 @@ export type ThemeColorVariableName = `${
 
 export type ThemeSize = "xs" | "sm" | "md" | "lg";
 
-export const colorSchemes = <ExtraColors extends string>(
-  classes: Record<ThemeColor | ExtraColors, string>
-) => ({
-  colorScheme: classes,
-});
+export function colorSchemes(
+  classes: ClassNameRecord<ThemeColor>
+): Record<"colorScheme", ClassNameRecord<ThemeColor>>; // Signature for when no extra colors are provided
+export function colorSchemes<ExtraColors extends string>(
+  classes: ClassNameRecord<ThemeColor | ExtraColors>
+): Record<"colorScheme", ClassNameRecord<ThemeColor | ExtraColors>>; // Signature for when extra colors are provided
+export function colorSchemes<ExtraColors extends string>(
+  classes:
+    | ClassNameRecord<ThemeColor>
+    | ClassNameRecord<ThemeColor | ExtraColors>
+) {
+  return {
+    colorScheme: classes,
+  };
+}
+
+// export const colorSchemes = <
+//   ExtraColors extends string | undefined = undefined
+// >(
+//   classes: Record<ThemeColor, string>,
+//   extraColorClasses?: ExtraColors extends string
+//     ? Record<ExtraColors, string>
+//     : undefined
+// ) => ({
+//   colorScheme: {
+//     ...classes,
+//     ...extraColorClasses,2
+//   },
+// });
 
 export const variants = <Variants extends string>(
   classes: Record<Variants, string>
@@ -38,11 +64,14 @@ export const sizes = (classes: Record<ThemeSize, string>) => ({
 
 export type ComponentProps<
   RootElement extends keyof JSX.IntrinsicElements,
-  ClassGenerator extends (...params: any[]) => any,
+  ClassGenerator extends (...params: any[]) => any = (p: EmptyObject) => any,
   ExtraProps extends Dictionary<any> = EmptyObject
-> = Merge<
-  JSX.IntrinsicElements[RootElement],
-  ExcludeFromValues<VariantProps<ClassGenerator>, null> & ExtraProps
+> = Omit<
+  Merge<
+    JSX.IntrinsicElements[RootElement],
+    ExcludeFromValues<VariantProps<ClassGenerator>, null> & ExtraProps
+  >,
+  "ref"
 >;
 
 type CSSVariableName<Name extends string> = `--${Name}`;

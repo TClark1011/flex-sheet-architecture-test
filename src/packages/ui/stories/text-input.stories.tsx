@@ -5,6 +5,9 @@ import { TextInput } from "@/packages/ui/components/text-input";
 const config: ComponentMeta<typeof TextInput> = {
   title: "TextInput",
   component: TextInput,
+  args: {
+    disabled: false,
+  },
 };
 export default config;
 

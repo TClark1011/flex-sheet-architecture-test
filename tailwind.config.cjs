@@ -14,6 +14,7 @@ module.exports = {
   },
   plugins: [
     require("daisyui"), 
+    require("@tailwindcss/line-clamp"),
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
         {
@@ -23,15 +24,20 @@ module.exports = {
             width: value,
           }), 
           hstack: (value) => ({
+            // horizontal stack
             display: 'flex',
             gap: value
           }),
           vstack: (value) => ({
+            // vertical stack
             display: 'flex',
             flexDirection: 'column',
             gap: value,
           }),
           container: (value) => ({
+            // Usually used to contain the main content of a page
+            // Will usually use the width provided, but will shrink 
+            // to fit narrow screens
             width: '100%',
             maxWidth: value
           })

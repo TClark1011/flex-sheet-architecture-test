@@ -1,14 +1,15 @@
 import { RootLayout } from "@/components/layouts/root-layout";
-import { Button } from "$ui";
-import type { WithSession } from "@/types/utility-types";
-import type { Note } from "@prisma/client";
+import { Badge, Button } from "$ui";
 import type { FC } from "react";
 import { IconPlus } from "@tabler/icons";
 import { useCreateNoteMutation } from "@/features/notes/hooks/note-mutation-hooks";
 import Link from "next/link";
 import { trpc } from "@/utils/trpc";
+import { useRenderLogger } from "@/hooks/use-render-logger";
 
 export const UserNotesView: FC = () => {
+  useRenderLogger("UserNotesView");
+
   const { data: notes = [] } = trpc.note.getCurrentUserNotes.useQuery();
   const { mutate: createNote, isLoading: noteIsBeingCreated } =
     useCreateNoteMutation();
@@ -21,11 +22,16 @@ export const UserNotesView: FC = () => {
               <Link
                 href={`/note/${note.id}`}
                 key={note.id}
-                className="rounded-xl bg-base-300 p-4 shadow-lg"
+                className="rounded-xl bg-base-300 p-4 vstack-2"
               >
-                <div className="mb-2">{note.title}</div>
-                <div className="truncate rounded-md border border-base-content p-1 text-gray-500">
+                <div>{note.title}</div>
+                <div className="box-content h-[5ex] rounded-md border border-base-content p-1 leading-[2.5ex] text-gray-500 line-clamp-2">
                   {note.content}
+                </div>
+                <div className="flex-wrap hstack-1">
+                  {note.tags.map((tag) => (
+                    <Badge key={tag.id}>{tag.name}</Badge>
+                  ))}
                 </div>
               </Link>
             ))}

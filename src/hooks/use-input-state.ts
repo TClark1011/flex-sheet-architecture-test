@@ -17,3 +17,20 @@ export const useInputState = (initialValue = "") => {
     { setState: setInputState },
   ] as const;
 };
+
+export const useCheckboxState = (initialState = false) => {
+  const [isChecked, setIsChecked] = useState(initialState);
+
+  const onChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const newState = event.target.checked;
+
+    setIsChecked(newState);
+  }, []);
+
+  const checkboxProps = {
+    onChange,
+    checked: isChecked,
+  } satisfies JSX.IntrinsicElements["input"];
+
+  return [isChecked, checkboxProps, { setState: setIsChecked }] as const;
+};

@@ -1,4 +1,8 @@
 import { useFormControlContext } from "@/packages/ui/hooks/use-form-control";
+import {
+  extraTextInputBaseClasses,
+  textInputSolidVariantClasses,
+} from "@/packages/ui/internal/common-classes";
 import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
 import { variants, sizes, colorSchemes } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
@@ -6,7 +10,7 @@ import { forwardRef, useEffect } from "react";
 
 export type TextInputVariants = "ghost" | "solid";
 
-const textInputClassNames = cva("input", {
+const textInputClassNames = cva(`input ${extraTextInputBaseClasses}`, {
   variants: {
     ...colorSchemes({
       primary: cx("input-primary"),
@@ -24,7 +28,7 @@ const textInputClassNames = cva("input", {
       lg: cx("input-lg"),
     }),
     ...variants<TextInputVariants>({
-      solid: "", // solid is default so we don't need any extra classes
+      solid: textInputSolidVariantClasses,
       ghost: cx("input-ghost"),
     }),
     hasError: {

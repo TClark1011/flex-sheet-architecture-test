@@ -2,6 +2,7 @@ import React from "react";
 import type { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Button } from "@/packages/ui/components/button";
 import { IconPlus } from "@tabler/icons";
+import { iconArgType } from "@/packages/ui/internal/story-helpers";
 
 const config: ComponentMeta<typeof Button> = {
   title: "Button",
@@ -9,6 +10,13 @@ const config: ComponentMeta<typeof Button> = {
   args: {
     variant: "solid",
     size: "md",
+    disabled: false,
+    isLoading: false,
+    noAnimation: false,
+  },
+  argTypes: {
+    leftIcon: iconArgType,
+    rightIcon: iconArgType,
   },
 };
 

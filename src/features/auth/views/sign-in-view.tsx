@@ -8,6 +8,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { externalAuthProviders } from "@/features/auth/constants/external-auth-providers";
 import { ExternalAuthButton } from "@/features/auth/components/ExternalAuthButton";
 import { useCallbackUrl } from "@/hooks/use-callback-url";
+import { RootLayout } from "@/components/layouts/root-layout";
 
 const signInFormSchema = z.object({
   email: zNonEmptyString().email(),
@@ -23,7 +24,7 @@ export const SignInView: FC = () => {
   });
 
   return (
-    <main className="flex h-screen w-screen items-center justify-center">
+    <RootLayout className="flex items-center justify-center">
       <div className="w-full max-w-[400px] rounded-lg bg-base-200 p-8 shadow-lg">
         {session && (
           <div>
@@ -77,6 +78,6 @@ export const SignInView: FC = () => {
           </>
         )}
       </div>
-    </main>
+    </RootLayout>
   );
 };
