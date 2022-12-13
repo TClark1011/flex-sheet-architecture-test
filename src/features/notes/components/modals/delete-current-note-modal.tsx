@@ -7,7 +7,10 @@ import { useRouter } from "next/router";
 import type { FC } from "react";
 
 export const DeleteCurrentNoteModal: FC<ModalProps> = (modalProps) => {
-  const deleteNoteMutator = useDeleteNoteMutation();
+  const deleteNoteMutator = useDeleteNoteMutation({
+    onSettled: modalProps.onClose,
+    onSuccess: () => push("/notes"),
+  });
   const noteId = useAtomValue(noteIdSelectorAtom);
   const { push } = useRouter();
 
@@ -22,10 +25,7 @@ export const DeleteCurrentNoteModal: FC<ModalProps> = (modalProps) => {
           colorScheme="error"
           isLoading={deleteNoteMutator.isLoading}
           onClick={() => {
-            deleteNoteMutator
-              .mutateAsync({ noteId })
-              .then(modalProps.onClose)
-              .then(() => push("/notes"));
+            deleteNoteMutator.mutate({ noteId });
           }}
         >
           Delete

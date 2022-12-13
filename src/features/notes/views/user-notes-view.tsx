@@ -10,6 +10,7 @@ import {
 import { trpc } from "@/utils/trpc";
 import { useRenderLogger } from "@/hooks/use-render-logger";
 import { useRouter } from "next/router";
+import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 
 export const UserNotesView: FC = () => {
   useRenderLogger("UserNotesView");
@@ -20,12 +21,14 @@ export const UserNotesView: FC = () => {
 
   const { mutate: createNote, isLoading: noteIsBeingCreated } =
     useCreateNoteMutation();
+
   const { mutate: deleteNote, isLoading: noteIsBeingDeleted } =
     useDeleteNoteMutation({
       onSettled: () => {
         setNoteIdTargetedForDelete(null);
       },
     });
+  const showDeleteLoader = useLoadingStateDebounce(noteIsBeingDeleted);
 
   const [noteIdTargetedForDelete, setNoteIdTargetedForDelete] = useState<
     string | null
@@ -110,7 +113,7 @@ export const UserNotesView: FC = () => {
           </Button>
           <Button
             colorScheme="error"
-            isLoading={noteIsBeingDeleted}
+            isLoading={showDeleteLoader}
             onClick={() =>
               deleteNote({
                 noteId: noteTargetedForDelete?.id ?? "",
