@@ -4,16 +4,16 @@
  * This is especially useful for Docker builds.
  */
 !process.env.SKIP_ENV_VALIDATION && (await import("./src/env/server.mjs"));
-import {withSuperjson} from 'next-superjson'
+import { withSuperjson } from "next-superjson";
 
 /** @type {import("next").NextConfig} */
 const config = {
-  reactStrictMode: true,
-  swcMinify: true,
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
+	reactStrictMode: true,
+	swcMinify: true,
+	i18n: {
+		locales: ["en"],
+		defaultLocale: "en",
+	},
 };
 
 export default withSuperjson()(config);

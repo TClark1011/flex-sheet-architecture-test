@@ -1,8 +1,8 @@
 import { useSaveNoteMutation } from "@/features/notes/hooks/note-mutation-hooks";
 import {
-  noteContentSelectorAtom,
-  noteIdSelectorAtom,
-  userCanEditNoteSelectorAtom,
+	noteContentSelectorAtom,
+	noteIdSelectorAtom,
+	userCanEditNoteSelectorAtom,
 } from "@/features/notes/stores/note-atoms";
 import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 import { useRenderLogger } from "@/hooks/use-render-logger";
@@ -17,83 +17,83 @@ import { z } from "zod";
 import { DeleteCurrentNoteModal } from "@/features/notes/components/modals/delete-current-note-modal";
 
 const noteContentEditFormSchema = z.object({
-  content: z.string(),
+	content: z.string(),
 });
 const noteContentEditFormResolver = zodResolver(noteContentEditFormSchema);
 
 const useNoteContentEditForm = () => {
-  const noteContent = useAtomValue(noteContentSelectorAtom);
-  const noteId = useAtomValue(noteIdSelectorAtom);
+	const noteContent = useAtomValue(noteContentSelectorAtom);
+	const noteId = useAtomValue(noteIdSelectorAtom);
 
-  const { mutateAsync: saveNote } = useSaveNoteMutation();
+	const { mutateAsync: saveNote } = useSaveNoteMutation();
 
-  const { handleSubmit, ...form } = useForm<
-    z.infer<typeof noteContentEditFormSchema>
-  >({
-    resolver: noteContentEditFormResolver,
-    defaultValues: {
-      content: noteContent,
-    },
-  });
+	const { handleSubmit, ...form } = useForm<
+		z.infer<typeof noteContentEditFormSchema>
+	>({
+		resolver: noteContentEditFormResolver,
+		defaultValues: {
+			content: noteContent,
+		},
+	});
 
-  const onSubmit = handleSubmit(async ({ content }) => {
-    await saveNote({
-      noteId,
-      data: {
-        content,
-      },
-    });
+	const onSubmit = handleSubmit(async ({ content }) => {
+		await saveNote({
+			noteId,
+			data: {
+				content,
+			},
+		});
 
-    form.reset({ content });
-    // we "reset" the form to the new values so that
-    // `formState.isDirty` goes back to `false` after
-    // submission
-  });
+		form.reset({ content });
+		// we "reset" the form to the new values so that
+		// `formState.isDirty` goes back to `false` after
+		// submission
+	});
 
-  return { onSubmit, ...form };
+	return { onSubmit, ...form };
 };
 
 export const NoteContentEdit: FC<WithClassName> = ({ className }) => {
-  useRenderLogger("NoteContentEdit");
+	useRenderLogger("NoteContentEdit");
 
-  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
+	const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
 
-  const { onSubmit, register, formState } = useNoteContentEditForm();
-  const showLoader = useLoadingStateDebounce(formState.isSubmitting);
-  const contentHasNotBeenChanged = !formState.isDirty;
+	const { onSubmit, register, formState } = useNoteContentEditForm();
+	const showLoader = useLoadingStateDebounce(formState.isSubmitting);
+	const contentHasNotBeenChanged = !formState.isDirty;
 
-  const deleteModalProps = useDisclosureState();
+	const deleteModalProps = useDisclosureState();
 
-  return (
-    <>
-      <form className={cx("flex flex-col", className)} onSubmit={onSubmit}>
-        <Textarea
-          {...register("content")}
-          className="mb-2 w-full"
-          readOnly={!userCanEditNote}
-        />
-        {userCanEditNote && (
-          <div className="flex justify-between">
-            <Button
-              colorScheme="error"
-              variant="ghost"
-              onClick={deleteModalProps.onOpen}
-            >
-              Delete
-            </Button>
-            <Button
-              colorScheme="primary"
-              type="submit"
-              isLoading={showLoader}
-              disabled={contentHasNotBeenChanged}
-            >
-              Save
-            </Button>
-          </div>
-        )}
-      </form>
+	return (
+		<>
+			<form className={cx("flex flex-col", className)} onSubmit={onSubmit}>
+				<Textarea
+					{...register("content")}
+					className="mb-2 w-full"
+					readOnly={!userCanEditNote}
+				/>
+				{userCanEditNote && (
+					<div className="flex justify-between">
+						<Button
+							colorScheme="error"
+							variant="ghost"
+							onClick={deleteModalProps.onOpen}
+						>
+							Delete
+						</Button>
+						<Button
+							colorScheme="primary"
+							type="submit"
+							isLoading={showLoader}
+							disabled={contentHasNotBeenChanged}
+						>
+							Save
+						</Button>
+					</div>
+				)}
+			</form>
 
-      <DeleteCurrentNoteModal {...deleteModalProps} />
-    </>
-  );
+			<DeleteCurrentNoteModal {...deleteModalProps} />
+		</>
+	);
 };

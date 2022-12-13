@@ -7,14 +7,14 @@ import superjson from "superjson";
 import { getServerAuthSession } from "@/server/common/get-server-auth-session";
 
 export const createTRPCServerHelpers = async <T extends Dictionary<any>>(
-  context: GetServerSidePropsContext<T>
+	context: GetServerSidePropsContext<T>
 ) => {
-  const session = await getServerAuthSession(context);
-  const trpcContext = await createContextInner({ session });
+	const session = await getServerAuthSession(context);
+	const trpcContext = await createContextInner({ session });
 
-  return createProxySSGHelpers({
-    router: appRouter,
-    ctx: trpcContext,
-    transformer: superjson,
-  });
+	return createProxySSGHelpers({
+		router: appRouter,
+		ctx: trpcContext,
+		transformer: superjson,
+	});
 };

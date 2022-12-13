@@ -1,3 +1,3 @@
 declare namespace Belt {
-  type UseMutableArrays = 1;
+	type UseMutableArrays = 1;
 }

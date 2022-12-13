@@ -4,29 +4,29 @@ import { Textarea } from "@/packages/ui/components/textarea";
 import type { ComponentMeta, ComponentStory } from "@storybook/react";
 
 const config: ComponentMeta<typeof FormControl> = {
-  title: "FormControl",
-  component: FormControl,
+	title: "FormControl",
+	component: FormControl,
 };
 export default config;
 
 const Template: ComponentStory<typeof FormControl> = (args) => (
-  <FormControl {...args}>
-    <TextInput placeholder="Placeholder" id="custom-id" />
-  </FormControl>
+	<FormControl {...args}>
+		<TextInput placeholder="Placeholder" id="custom-id" />
+	</FormControl>
 );
 
 export const WithTextInput = Template.bind({});
 WithTextInput.args = {
-  label: "Label",
+	label: "Label",
 };
 
 const TextareaTemplate: ComponentStory<typeof FormControl> = (args) => (
-  <FormControl {...args}>
-    <Textarea placeholder="Placeholder" id="custom-textarea-id" />
-  </FormControl>
+	<FormControl {...args}>
+		<Textarea placeholder="Placeholder" id="custom-textarea-id" />
+	</FormControl>
 );
 
 export const WithTextarea = TextareaTemplate.bind({});
 WithTextarea.args = {
-  label: "Label",
+	label: "Label",
 };

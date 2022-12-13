@@ -1,12 +1,12 @@
-import '../src/styles/globals.css'
-import './styles.css'
+import "../src/styles/globals.css";
+import "./styles.css";
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
-}
+	actions: { argTypesRegex: "^on[A-Z].*" },
+	controls: {
+		matchers: {
+			color: /(background|color)$/i,
+			date: /Date$/,
+		},
+	},
+};

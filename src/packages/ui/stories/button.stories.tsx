@@ -5,19 +5,19 @@ import { IconPlus } from "@tabler/icons";
 import { iconArgType } from "@/packages/ui/internal/story-helpers";
 
 const config: ComponentMeta<typeof Button> = {
-  title: "Button",
-  component: Button,
-  args: {
-    variant: "solid",
-    size: "md",
-    disabled: false,
-    isLoading: false,
-    noAnimation: false,
-  },
-  argTypes: {
-    leftIcon: iconArgType,
-    rightIcon: iconArgType,
-  },
+	title: "Button",
+	component: Button,
+	args: {
+		variant: "solid",
+		size: "md",
+		disabled: false,
+		isLoading: false,
+		noAnimation: false,
+	},
+	argTypes: {
+		leftIcon: iconArgType,
+		rightIcon: iconArgType,
+	},
 };
 
 export default config;
@@ -28,25 +28,25 @@ const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 export const Basic = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Basic.args = {
-  children: "Button",
+	children: "Button",
 };
 
 IconPlus.displayName = "IconPlus"; // Make sure icon component name displays correctly in storybook docs
 
 export const LeftIcon = Template.bind({});
 LeftIcon.args = {
-  children: "Button",
-  leftIcon: <IconPlus />,
+	children: "Button",
+	leftIcon: <IconPlus />,
 };
 
 export const RightIcon = Template.bind({});
 RightIcon.args = {
-  children: "Button",
-  rightIcon: <IconPlus />,
+	children: "Button",
+	rightIcon: <IconPlus />,
 };
 
 export const IconButton = Template.bind({});
 IconButton.args = {
-  children: <IconPlus />,
-  shape: "square",
+	children: <IconPlus />,
+	shape: "square",
 };

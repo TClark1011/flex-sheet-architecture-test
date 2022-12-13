@@ -9,15 +9,15 @@ import { Toaster } from "react-hot-toast";
 import { toastConfig } from "@/constants/toast-config";
 
 const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
+	Component,
+	pageProps: { session, ...pageProps },
 }) => {
-  return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-      <Toaster {...toastConfig} />
-    </SessionProvider>
-  );
+	return (
+		<SessionProvider session={session}>
+			<Component {...pageProps} />
+			<Toaster {...toastConfig} />
+		</SessionProvider>
+	);
 };
 
 export default trpc.withTRPC(MyApp);
