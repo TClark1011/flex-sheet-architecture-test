@@ -3,15 +3,30 @@
 	"parserOptions": {
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["@typescript-eslint"],
+	"plugins": ["@typescript-eslint", "unicorn"],
 	"extends": [
 		"next/core-web-vitals",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react-hooks/recommended"
 	],
+	"overrides": [
+		{
+			"files": ["src/pages/**"],
+			"rules": {
+				"unicorn/filename-case": "off"
+			}
+		}
+	],
 	"rules": {
 		"@typescript-eslint/consistent-type-imports": "warn",
 		"@typescript-eslint/no-explicit-any": "off",
-		"react/react-in-jsx-scope": "off"
+		"react/react-in-jsx-scope": "off",
+		"unicorn/filename-case": [
+			"error",
+			{
+				"case": "kebabCase",
+				"ignore": ["pages"]
+			}
+		]
 	}
 }

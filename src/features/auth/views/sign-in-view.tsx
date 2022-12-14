@@ -6,7 +6,7 @@ import { Button, FormControl, TextInput } from "$ui";
 import { zNonEmptyString } from "@/utils/utility-schemas";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { externalAuthProviders } from "@/features/auth/constants/external-auth-providers";
-import { ExternalAuthButton } from "@/features/auth/components/ExternalAuthButton";
+import { ExternalAuthButton } from "@/features/auth/components/external-auth-button";
 import { useCallbackUrl } from "@/hooks/use-callback-url";
 import { RootLayout } from "@/components/layouts/root-layout";
 
