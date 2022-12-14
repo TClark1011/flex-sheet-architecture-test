@@ -1,6 +1,6 @@
 import type { ExternalAuthProviderData } from "@/features/auth/constants/external-auth-providers";
 import { useCallbackUrl } from "@/hooks/use-callback-url";
-import { Button } from "@/packages/ui";
+import { Button } from "@/packages/ui/components/button";
 import cx from "classnames";
 import { signIn } from "next-auth/react";
 import type { FC } from "react";

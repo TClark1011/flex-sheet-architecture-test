@@ -7,7 +7,7 @@ import {
 } from "@/features/notes/stores/note-atoms";
 import { useLoadingStateDebounce } from "@/hooks/logic-hooks";
 import { useRenderLogger } from "@/hooks/use-render-logger";
-import { Badge, Button, TextInput } from "@/packages/ui";
+import { Badge, Button, TextInput } from "$ui";
 import type { WithClassName } from "@/types/utility-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconPlus, IconX } from "@tabler/icons";

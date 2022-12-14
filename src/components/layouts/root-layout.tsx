@@ -1,4 +1,4 @@
-import { Button, Navbar } from "@/packages/ui";
+import { Button, Navbar } from "$ui";
 import type { WithClassName } from "@/types/utility-types";
 import cx from "classnames";
 import { signIn, signOut, useSession } from "next-auth/react";

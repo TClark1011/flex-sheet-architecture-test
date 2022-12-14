@@ -3,17 +3,29 @@
 	"parserOptions": {
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["@typescript-eslint", "unicorn"],
+	"plugins": ["@typescript-eslint", "unicorn", "import"],
 	"extends": [
 		"next/core-web-vitals",
 		"plugin:@typescript-eslint/recommended",
-		"plugin:react-hooks/recommended"
+		"plugin:react-hooks/recommended",
+		"./eslint-config-paths.js"
 	],
 	"overrides": [
 		{
 			"files": ["src/pages/**"],
 			"rules": {
 				"unicorn/filename-case": "off"
+			}
+		},
+		{
+			"files": [
+				"src/pages/**",
+				"src/middleware.ts",
+				".storybook/**",
+				"**/*.stories.*"
+			],
+			"rules": {
+				"import/no-default-export": "off"
 			}
 		}
 	],
@@ -27,6 +39,14 @@
 				"case": "kebabCase",
 				"ignore": ["pages"]
 			}
-		]
+		],
+		// Import
+		"import/no-default-export": "error"
+		// "no-restricted-imports": [
+		// 	"error",
+		// 	{
+		// 		"patterns": ["@/packages/*/*"]
+		// 	}
+		// ]
 	}
 }

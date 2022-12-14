@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { Button } from "@/packages/ui";
+import { Button } from "$ui";
 import { RootLayout } from "@/components/layouts/root-layout";
 
 const Home: NextPage = () => {
