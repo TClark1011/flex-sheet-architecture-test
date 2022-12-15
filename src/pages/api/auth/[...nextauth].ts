@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
 		}),
 		EmailProvider({
 			server: `smtp://${env.EMAIL_SMTP_USERNAME}:${env.EMAIL_SMTP_PASSWORD}@${env.EMAIL_SMTP_ENDPOINT}:587`,
-			from: "testingses8@gmail.com",
+			from: env.EMAIL_FROM,
 		}),
 	],
 };
