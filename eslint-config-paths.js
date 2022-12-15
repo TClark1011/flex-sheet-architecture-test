@@ -21,20 +21,23 @@ const libFiles = fs.readdirSync("src/lib");
 
 const libs = libFiles.map((file) => file.replace(".ts", ""));
 
-const universalPathRestrictions = [
+const universalPatternRestrictions = [
+	...featureFolders.map((folder) => ({
+		group: [`@/features/${folder}/*`],
+		message: `Use "@/features/${folder}" instead`,
+	})),
 	...packageFolders.map((folder) => ({
-		name: `@/packages/${folder}`,
+		group: [`@/packages/${folder}/**`, `$${folder}/**`],
 		message: `Use the shorthand "$${folder}" instead`,
 	})),
 	...libs.map((lib) => ({
-		name: `@/lib/${lib}`,
+		group: [`@/lib/${lib}/**`, `$${lib}/**`],
 		message: `Use the shorthand "$${lib}" instead`,
 	})),
 ];
 
 /** @type {import('eslint').Linter.BaseConfig} */
 module.exports = {
-	plugins: ["import"],
 	overrides: [
 		...featureFolders.map((folder) => ({
 			files: [`src/features/${folder}/**/*.{ts,tsx}`],
@@ -43,45 +46,63 @@ module.exports = {
 					"error",
 					{
 						paths: [
-							...universalPathRestrictions,
 							{
 								name: `@/features/${folder}`,
 								message:
 									"A feature cannot import from its own index file. Write out the full file path instead.",
 							},
 						],
+						patterns: universalPatternRestrictions.filter(
+							(pattern) => !pattern.group.includes(`@/features/${folder}/*`)
+						),
 					},
 				],
 			},
 		})),
-		...packageFolders.map((folder) => ({
-			files: [`src/packages/${folder}/**/*.{ts,tsx}`],
+		...packageFolders.map((packageFolder) => ({
+			files: [`src/packages/${packageFolder}/**/*.{ts,tsx}`],
 			rules: {
 				"no-restricted-imports": [
 					"error",
 					{
-						paths: [
-							...universalPathRestrictions,
-							{
-								name: `$${folder}`,
-								message:
-									"A feature cannot import from its own index file. Write out the full file path instead.",
-							},
-						],
+						paths: ["@/packages/", "$"].map((prefix) => ({
+							name: `${prefix}${packageFolder}`,
+							message:
+								"A package cannot import from its own index file. Write out the full file path instead.",
+						})),
+						patterns: universalPatternRestrictions.filter(
+							(pattern) =>
+								!pattern.group.includes(`@/packages/${packageFolder}/**`)
+						),
+					},
+				],
+			},
+		})),
+		...libs.map((lib) => ({
+			files: [`src/lib/${lib}/**/*.{ts,tsx}`],
+			rules: {
+				"no-restricted-imports": [
+					"error",
+					{
+						paths: ["@/lib/", "$"].map((prefix) => ({
+							name: `${prefix}${lib}`,
+							message:
+								"A lib cannot import from its own index file. Write out the full file path instead.",
+						})),
+						patterns: universalPatternRestrictions.filter(
+							(pattern) => !pattern.group.includes(`@/lib/${lib}/**`)
+						),
 					},
 				],
 			},
 		})),
 	],
-	// rules: {
-	//   "no-restricted-imports": ['error', {
-	//     paths: [...packageFolders.map(folder => ({
-	//       name: `@/packages/${folder}`,
-	//       message: `Use the shorthand "$${folder}" instead`
-	//     })), ...libs.map(lib => ({
-	//       name: `@/lib/${lib}`,
-	//       message: `Use the shorthand "$${lib}" instead`
-	//     }))]
-	//   }]
-	// }
+	rules: {
+		"no-restricted-imports": [
+			"error",
+			{
+				patterns: universalPatternRestrictions,
+			},
+		],
+	},
 };
