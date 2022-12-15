@@ -14,7 +14,8 @@
 		"format": "yarn prettify && yarn lint",
 		"update-git-hooks": "simple-git-hooks",
 		"check-docker-install": "tsx scripts/check-docker-install.ts",
-		"postinstall": "prisma generate && patch-package && simple-git-hooks && yarn check-docker-install"
+		"test-if-is-ci": "(is-ci && echo \"This is CI\") || (is-ci || echo \"This is NOT CI\")",
+		"postinstall": "prisma generate && yarn test-if-is-ci && (is-ci || patch-package && simple-git-hooks && yarn check-docker-install)"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^2.9.10",
@@ -74,6 +75,7 @@
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-storybook": "^0.6.7",
 		"eslint-plugin-unicorn": "^45.0.2",
+		"is-ci": "^3.0.1",
 		"next-superjson": "^0.0.4",
 		"patch-package": "^6.5.0",
 		"postcss": "^8.4.14",

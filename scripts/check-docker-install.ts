@@ -3,7 +3,7 @@ import chalk from "chalk";
 
 try {
 	execSync("docker -v", {
-		shell: "pipe", // Prevents error from getting printed to console
+		stdio: "pipe", // Prevents error from getting printed to console
 	});
 } catch {
 	console.log("\n");
