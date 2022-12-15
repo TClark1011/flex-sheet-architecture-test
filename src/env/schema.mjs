@@ -21,6 +21,9 @@ export const serverSchema = z.object({
 	),
 	DISCORD_CLIENT_ID: z.string(),
 	DISCORD_CLIENT_SECRET: z.string(),
+	EMAIL_SMTP_PASSWORD: z.string(),
+	EMAIL_SMTP_USERNAME: z.string(),
+	EMAIL_SMTP_ENDPOINT: z.string(),
 });
 
 /**

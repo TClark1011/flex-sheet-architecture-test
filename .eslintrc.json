@@ -23,7 +23,8 @@
 				"src/pages/**",
 				"src/middleware.ts",
 				".storybook/**",
-				"**/*.stories.*"
+				"**/*.stories.*",
+				"*config*"
 			],
 			"rules": {
 				"import/no-default-export": "off"

@@ -1,8 +1,6 @@
 import { SignInView } from "@/features/auth";
 import type { NextPage } from "next";
 
-const SignInPage: NextPage = () => {
-	return <SignInView />;
-};
+const SignInPage: NextPage = SignInView;
 
 export default SignInPage;
