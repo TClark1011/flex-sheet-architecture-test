@@ -43,11 +43,5 @@
 		],
 		// Import
 		"import/no-default-export": "error"
-		// "no-restricted-imports": [
-		// 	"error",
-		// 	{
-		// 		"patterns": ["@/packages/*/*"]
-		// 	}
-		// ]
 	}
 }
