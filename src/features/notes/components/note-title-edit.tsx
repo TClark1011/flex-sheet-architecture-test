@@ -1,8 +1,8 @@
 import { useSaveNoteMutation } from "@/features/notes/hooks/note-mutation-hooks";
 import {
-  noteIdSelectorAtom,
-  noteTitleSelectorAtom,
-  userCanEditNoteSelectorAtom,
+	noteIdSelectorAtom,
+	noteTitleSelectorAtom,
+	userCanEditNoteSelectorAtom,
 } from "@/features/notes/stores/note-atoms";
 import { useInputState } from "@/hooks/use-input-state";
 import { Swap, TextInput } from "$ui";
@@ -15,72 +15,72 @@ import { cx } from "class-variance-authority";
 import { useRenderLogger } from "@/hooks/use-render-logger";
 
 const useNoteTitleEdit = () => {
-  const { mutateAsync: saveNote, isLoading: noteIsSaving } =
-    useSaveNoteMutation();
+	const { mutateAsync: saveNote, isLoading: noteIsSaving } =
+		useSaveNoteMutation();
 
-  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
-  const noteId = useAtomValue(noteIdSelectorAtom);
-  const noteTitle = useAtomValue(noteTitleSelectorAtom);
+	const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
+	const noteId = useAtomValue(noteIdSelectorAtom);
+	const noteTitle = useAtomValue(noteTitleSelectorAtom);
 
-  const [newTitle, inputStateProps] = useInputState(noteTitle);
-  const [titleIsEditable, setTitleIsEditable] = useState(false);
+	const [newTitle, inputStateProps] = useInputState(noteTitle);
+	const [titleIsEditable, setTitleIsEditable] = useState(false);
 
-  const onSave = () =>
-    saveNote({
-      noteId,
-      data: {
-        title: newTitle,
-      },
-    });
+	const onSave = () =>
+		saveNote({
+			noteId,
+			data: {
+				title: newTitle,
+			},
+		});
 
-  return {
-    inputProps: {
-      ...inputStateProps,
-      readOnly: !titleIsEditable || !userCanEditNote,
-      disabled: noteIsSaving,
-    },
-    onSave,
-    editableCheckboxProps: {
-      checked: titleIsEditable,
-      disabled: noteIsSaving,
-      onChange: async (e: ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.checked) {
-          await onSave();
-          setTitleIsEditable(false);
-        } else {
-          setTitleIsEditable(e.target.checked);
-        }
-      },
-    },
-    titleIsEditable,
-  };
+	return {
+		inputProps: {
+			...inputStateProps,
+			readOnly: !titleIsEditable || !userCanEditNote,
+			disabled: noteIsSaving,
+		},
+		onSave,
+		editableCheckboxProps: {
+			checked: titleIsEditable,
+			disabled: noteIsSaving,
+			onChange: async (e: ChangeEvent<HTMLInputElement>) => {
+				if (!e.target.checked) {
+					await onSave();
+					setTitleIsEditable(false);
+				} else {
+					setTitleIsEditable(e.target.checked);
+				}
+			},
+		},
+		titleIsEditable,
+	};
 };
 
 export const NoteTitleEdit: FC<WithClassName> = ({ className }) => {
-  useRenderLogger("NoteTitleEdit");
+	useRenderLogger("NoteTitleEdit");
 
-  const { inputProps, editableCheckboxProps, titleIsEditable } =
-    useNoteTitleEdit();
+	const { inputProps, editableCheckboxProps, titleIsEditable } =
+		useNoteTitleEdit();
 
-  const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
+	const userCanEditNote = useAtomValue(userCanEditNoteSelectorAtom);
 
-  return (
-    <div className={cx("items-center hstack-2", className)}>
-      {userCanEditNote && (
-        <Swap
-          {...editableCheckboxProps}
-          on={<IconDeviceFloppy />}
-          off={<IconPencil />}
-        />
-      )}
-      <TextInput
-        {...inputProps}
-        aria-label="Note Title"
-        placeholder="Enter Note Title"
-        bordered={titleIsEditable}
-        variant={titleIsEditable ? "solid" : "ghost"}
-        className="w-64 text-xl font-bold"
-      />
-    </div>
-  );
+	return (
+		<div className={cx("items-center hstack-2", className)}>
+			{userCanEditNote && (
+				<Swap
+					{...editableCheckboxProps}
+					on={<IconDeviceFloppy />}
+					off={<IconPencil />}
+				/>
+			)}
+			<TextInput
+				{...inputProps}
+				aria-label="Note Title"
+				placeholder="Enter Note Title"
+				bordered={titleIsEditable}
+				variant={titleIsEditable ? "solid" : "ghost"}
+				className="w-64 text-xl font-bold"
+			/>
+		</div>
+	);
 };

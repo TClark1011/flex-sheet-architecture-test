@@ -13,10 +13,10 @@ export { default as middleware } from "next-auth/middleware";
 type ValidConfigMatcherPath = `/${string}`; // Nextjs middleware path must start with "/"
 
 type MiddlewareConfig = {
-  matcher: ValidConfigMatcherPath[];
+	matcher: ValidConfigMatcherPath[];
 };
 
 export const config: MiddlewareConfig = {
-  // define URLs we want to be protected
-  matcher: ["/notes"],
+	// define URLs we want to be protected
+	matcher: ["/notes"],
 };

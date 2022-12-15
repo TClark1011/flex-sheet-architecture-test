@@ -1,12 +1,47 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "plugins": ["@typescript-eslint"],
-  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
-  "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/no-explicit-any": "off"
-  }
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "./tsconfig.json"
+	},
+	"plugins": ["@typescript-eslint", "unicorn", "import", "prettier"],
+	"extends": [
+		"next/core-web-vitals",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react-hooks/recommended",
+		"plugin:prettier/recommended",
+		"./eslint-config-paths.js"
+	],
+	"overrides": [
+		{
+			"files": ["src/pages/**"],
+			"rules": {
+				"unicorn/filename-case": "off"
+			}
+		},
+		{
+			"files": [
+				"src/pages/**",
+				"src/middleware.ts",
+				".storybook/**",
+				"**/*.stories.*"
+			],
+			"rules": {
+				"import/no-default-export": "off"
+			}
+		}
+	],
+	"rules": {
+		"@typescript-eslint/consistent-type-imports": "warn",
+		"@typescript-eslint/no-explicit-any": "off",
+		"react/react-in-jsx-scope": "off",
+		"unicorn/filename-case": [
+			"error",
+			{
+				"case": "kebabCase",
+				"ignore": ["pages"]
+			}
+		],
+		// Import
+		"import/no-default-export": "error"
+	}
 }

@@ -1,1 +1,1 @@
-module.exports = import('./next-config.mjs').then(r => r.default)
+module.exports = import("./next-config.mjs").then((r) => r.default);

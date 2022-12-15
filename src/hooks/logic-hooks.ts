@@ -11,4 +11,4 @@ import { useDebouncedValue } from "@/hooks/debounce-hooks";
  * something looks fine without it, don't do it.
  */
 export const useLoadingStateDebounce = <T>(value: T) =>
-  useDebouncedValue(value, 50);
+	useDebouncedValue(value, 50);

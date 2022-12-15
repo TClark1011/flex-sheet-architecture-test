@@ -8,7 +8,7 @@ import { authOptions } from "../../pages/api/auth/[...nextauth]";
  * See example usage in trpc createContext or the restricted API route
  */
 export const getServerAuthSession = async (
-  ctx: Pick<GetServerSidePropsContext, "req" | "res">
+	ctx: Pick<GetServerSidePropsContext, "req" | "res">
 ) => {
-  return await unstable_getServerSession(ctx.req, ctx.res, authOptions);
+	return await unstable_getServerSession(ctx.req, ctx.res, authOptions);
 };

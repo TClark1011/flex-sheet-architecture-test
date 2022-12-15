@@ -6,55 +6,55 @@ import type { Session } from "next-auth";
 import { unstable_getServerSession } from "next-auth";
 
 export const simpleProtectedGetServerSideProps: GetServerSideProps<
-  WithSession
+	WithSession
 > = async (context) => {
-  const session = await getServerAuthSession(context);
+	const session = await getServerAuthSession(context);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/sign-in",
-        permanent: false,
-      },
-    };
-  }
+	if (!session) {
+		return {
+			redirect: {
+				destination: "/sign-in",
+				permanent: false,
+			},
+		};
+	}
 
-  return {
-    props: {
-      authSession: session,
-    },
-  };
+	return {
+		props: {
+			authSession: session,
+		},
+	};
 };
 
 export const createProtectedGetServerSideProps =
-  <OtherProps extends Record<string, any>>(
-    getOtherProps: (
-      session: Session,
-      context: GetServerSidePropsContext<WithSession & OtherProps>
-    ) => Promise<OtherProps> | OtherProps
-  ): GetServerSideProps<WithSession & OtherProps> =>
-  async (context) => {
-    const authSession = await unstable_getServerSession(
-      context.req,
-      context.res,
-      authOptions
-    );
+	<OtherProps extends Record<string, any>>(
+		getOtherProps: (
+			session: Session,
+			context: GetServerSidePropsContext<WithSession & OtherProps>
+		) => Promise<OtherProps> | OtherProps
+	): GetServerSideProps<WithSession & OtherProps> =>
+	async (context) => {
+		const authSession = await unstable_getServerSession(
+			context.req,
+			context.res,
+			authOptions
+		);
 
-    if (!authSession) {
-      return {
-        redirect: {
-          destination: "/sign-in",
-          permanent: false,
-        },
-      };
-    }
+		if (!authSession) {
+			return {
+				redirect: {
+					destination: "/sign-in",
+					permanent: false,
+				},
+			};
+		}
 
-    const otherProps = await getOtherProps(authSession, context as any);
+		const otherProps = await getOtherProps(authSession, context as any);
 
-    return {
-      props: {
-        authSession,
-        ...otherProps,
-      },
-    };
-  };
+		return {
+			props: {
+				authSession,
+				...otherProps,
+			},
+		};
+	};

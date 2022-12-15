@@ -1,12 +1,14 @@
 {
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "tailwindCSS.experimental.classRegex": [
-    "cx\\('([^')]*)",
-    "cx\\(\"([^\")]*)",
-    "cx\\(`([^`)]*)",
-    "cva\\('([^')]*)",
-    "cva\\(\"([^\")]*)",
-    "cva\\(`([^`)]*)"
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"tailwindCSS.experimental.classRegex": [
+		"cx\\('([^')]*)",
+		"cx\\(\"([^\")]*)",
+		"cx\\(`([^`)]*)",
+		"cva\\('([^')]*)",
+		"cva\\(\"([^\")]*)",
+		"cva\\(`([^`)]*)"
+	],
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+	"editor.formatOnSave": true
 }

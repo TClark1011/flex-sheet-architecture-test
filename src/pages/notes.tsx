@@ -5,15 +5,15 @@ import type { StandardGetServerSidePropsWithPrefetch } from "@/types/utility-typ
 import { createTRPCServerHelpers } from "@/server/trpc/server-helpers";
 
 export const getServerSideProps = createProtectedGetServerSideProps(
-  async (_, context) => {
-    const trpcClient = await createTRPCServerHelpers(context);
+	async (_, context) => {
+		const trpcClient = await createTRPCServerHelpers(context);
 
-    await trpcClient.note.getCurrentUserNotes.prefetch();
+		await trpcClient.note.getCurrentUserNotes.prefetch();
 
-    return {
-      trpcState: trpcClient.dehydrate(),
-    };
-  }
+		return {
+			trpcState: trpcClient.dehydrate(),
+		};
+	}
 ) satisfies StandardGetServerSidePropsWithPrefetch;
 
 const NotesPage: NextPage = UserNotesView;
