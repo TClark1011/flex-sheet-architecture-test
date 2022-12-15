@@ -3,11 +3,12 @@
 	"parserOptions": {
 		"project": "./tsconfig.json"
 	},
-	"plugins": ["@typescript-eslint", "unicorn", "import"],
+	"plugins": ["@typescript-eslint", "unicorn", "import", "prettier"],
 	"extends": [
 		"next/core-web-vitals",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react-hooks/recommended",
+		"plugin:prettier/recommended",
 		"./eslint-config-paths.js"
 	],
 	"overrides": [

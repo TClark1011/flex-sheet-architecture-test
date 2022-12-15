@@ -9,6 +9,6 @@
 		"cva\\(`([^`)]*)"
 	],
 	"typescript.tsdk": "node_modules/typescript/lib",
-	"editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"editor.formatOnSave": true
 }
