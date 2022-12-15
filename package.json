@@ -13,7 +13,8 @@
 		"prettify": "prettier --write .",
 		"format": "yarn prettify && yarn lint",
 		"update-git-hooks": "simple-git-hooks",
-		"postinstall": "prisma generate && patch-package && simple-git-hooks"
+		"check-docker-install": "tsx scripts/check-docker-install.ts",
+		"postinstall": "prisma generate && patch-package && simple-git-hooks && yarn check-docker-install"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^2.9.10",
@@ -64,6 +65,7 @@
 		"autoprefixer": "^10.4.7",
 		"babel-loader": "^8.3.0",
 		"barrelsby": "^2.5.1",
+		"chalk": "^5.2.0",
 		"eslint": "^8.29.0",
 		"eslint-config-next": "13.0.2",
 		"eslint-config-prettier": "^8.5.0",
@@ -81,6 +83,7 @@
 		"simple-git-hooks": "^2.8.1",
 		"storybook-addon-next": "^1.7.1",
 		"tailwindcss": "^3.2.0",
+		"tsx": "^3.12.1",
 		"typescript": "^4.8.4"
 	},
 	"ct3aMetadata": {

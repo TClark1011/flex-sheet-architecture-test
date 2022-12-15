@@ -38,6 +38,10 @@ const useNoteQuery = () => {
 	}, [setNotePermission, result.permission]);
 };
 
+/**
+ * Headless component that manages data fetching and syncing
+ * fetched data into client state.
+ */
 export const SingleNoteQueryManager: FC = () => {
 	useNoteQuery();
 
