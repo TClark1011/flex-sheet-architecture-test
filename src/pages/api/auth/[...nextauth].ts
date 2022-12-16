@@ -7,9 +7,17 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "@/env/server.mjs";
 import { prisma } from "@/server/db/client";
 
-const emailServerUrl = `smtp://${env.EMAIL_SMTP_USERNAME}:${env.EMAIL_SMTP_PASSWORD}@${env.EMAIL_SMTP_ENDPOINT}:587`;
-
-console.log("([...nextauth]) emailServerUrl: ", emailServerUrl);
+type EmailProviderServerConfig = {
+	host: string;
+	port: number;
+	auth: {
+		user: string;
+		pass: string;
+	};
+};
+// This typing is valid, but just is for some reason not
+// supplied/used by the actual `EmailProvider` parameter
+// within next-auth
 
 export const authOptions: NextAuthOptions = {
 	// Include user.id on session
@@ -40,7 +48,14 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 		EmailProvider({
-			server: emailServerUrl,
+			server: {
+				host: env.EMAIL_SMTP_ENDPOINT,
+				port: 587,
+				auth: {
+					user: env.EMAIL_SMTP_USERNAME,
+					pass: env.EMAIL_SMTP_PASSWORD,
+				},
+			} satisfies EmailProviderServerConfig,
 			from: env.EMAIL_FROM,
 		}),
 	],
