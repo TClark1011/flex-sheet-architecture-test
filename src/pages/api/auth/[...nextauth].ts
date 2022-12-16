@@ -7,6 +7,10 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "@/env/server.mjs";
 import { prisma } from "@/server/db/client";
 
+const emailServerUrl = `smtp://${env.EMAIL_SMTP_USERNAME}:${env.EMAIL_SMTP_PASSWORD}@${env.EMAIL_SMTP_ENDPOINT}:587`;
+
+console.log("([...nextauth]) emailServerUrl: ", emailServerUrl);
+
 export const authOptions: NextAuthOptions = {
 	// Include user.id on session
 	session: {
@@ -36,7 +40,7 @@ export const authOptions: NextAuthOptions = {
 			},
 		}),
 		EmailProvider({
-			server: `smtp://${env.EMAIL_SMTP_USERNAME}:${env.EMAIL_SMTP_PASSWORD}@${env.EMAIL_SMTP_ENDPOINT}:587`,
+			server: emailServerUrl,
 			from: env.EMAIL_FROM,
 		}),
 	],

@@ -14,8 +14,7 @@
 		"format": "yarn prettify && yarn lint",
 		"update-git-hooks": "simple-git-hooks",
 		"check-docker-install": "tsx scripts/check-docker-install.ts",
-		"test-if-is-ci": "(is-ci && echo \"This is CI\") || (is-ci || echo \"This is NOT CI\")",
-		"postinstall": "prisma generate && yarn test-if-is-ci && (is-ci || patch-package && simple-git-hooks && yarn check-docker-install)"
+		"postinstall": "prisma generate && (is-ci || (patch-package && simple-git-hooks && yarn check-docker-install))"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^2.9.10",
