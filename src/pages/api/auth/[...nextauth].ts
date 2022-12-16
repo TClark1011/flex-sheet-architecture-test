@@ -1,7 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import EmailProvider from "next-auth/providers/email";
-// Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import { env } from "@/env/server.mjs";
@@ -20,11 +19,11 @@ type EmailProviderServerConfig = {
 // within next-auth
 
 export const authOptions: NextAuthOptions = {
-	// Include user.id on session
 	session: {
 		strategy: "jwt",
 	},
 	callbacks: {
+		// Include user.id on session
 		session: async ({ session, token }) => {
 			if (session.user) {
 				session.user.id = token.sub ?? session.user.id;
