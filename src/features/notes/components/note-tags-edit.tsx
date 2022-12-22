@@ -73,9 +73,9 @@ export const NoteTagsEdit: FC<WithClassName> = ({ className }) => {
 						<Badge
 							onClick={() => setTagIdTargetedForDelete(tag.id)}
 							className="cursor-pointer"
-							tabIndex={0}
 							icon={userCanEditNote ? <IconX /> : <></>}
 							key={tag.id}
+							as="button"
 						>
 							{tag.name}
 						</Badge>

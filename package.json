@@ -11,8 +11,7 @@
 		"storybook": "start-storybook -p 6006",
 		"build-storybook": "build-storybook",
 		"gen:exports": "barrelsby --config barrelsby.json",
-		"prettify": "prettier --write .",
-		"format": "yarn prettify && yarn lint",
+		"format": "yarn lint --fix",
 		"update-git-hooks": "simple-git-hooks",
 		"check-docker-install": "tsx scripts/check-docker-install.ts",
 		"postinstall": "prisma generate && (is-ci || (patch-package && simple-git-hooks && yarn check-docker-install))"
@@ -94,6 +93,6 @@
 		"initVersion": "6.10.3"
 	},
 	"simple-git-hooks": {
-		"pre-commit": "yarn format"
+		"pre-commit": "yarn lint"
 	}
 }

@@ -6,7 +6,7 @@ import { images } from "@/constants/images";
 import type { StandardGetServerSidePropsWithPrefetch } from "@/types/utility-types";
 import { createTRPCServerHelpers } from "@/server/trpc/server-helpers";
 import { useSession } from "@/hooks/use-session";
-import { Button } from "@/packages/ui";
+import { Button } from "$ui";
 import Link from "next/link";
 
 export const getServerSideProps = (async (context) => {
@@ -48,12 +48,16 @@ const Home: NextPage = () => {
 
 					{sessionStatus === "unauthenticated" && (
 						<Link passHref legacyBehavior href="/sign-in">
-							<Button colorScheme="primary">Sign Up</Button>
+							<Button colorScheme="primary" as="a">
+								Sign Up
+							</Button>
 						</Link>
 					)}
 					{sessionStatus === "authenticated" && (
 						<Link passHref legacyBehavior href="/notes">
-							<Button colorScheme="primary">Go To Notes</Button>
+							<Button colorScheme="primary" as="a">
+								Go To Notes
+							</Button>
 						</Link>
 					)}
 				</div>

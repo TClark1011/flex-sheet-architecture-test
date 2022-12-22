@@ -21,18 +21,40 @@ const libFiles = fs.readdirSync("src/lib");
 
 const libs = libFiles.map((file) => file.replace(".ts", ""));
 
+const composeAtSignPath = (type, folder) => `@/${type}/${folder}`;
+const composeDollarSignPath = (folder) => `$${folder}`;
+
+const composeFeatureAtSignPath = (folder) =>
+	composeAtSignPath("features", folder);
+const composePackageAtSignPath = (folder) =>
+	composeAtSignPath("packages", folder);
+const composeLibAtSignPath = (folder) => composeAtSignPath("lib", folder);
+
+const composeDeepPathGlob = (path) => `${path}/**`;
+
+const composeInvalidFeatureImportPattern = (folder) =>
+	composeDeepPathGlob(composeFeatureAtSignPath(folder));
+
 const universalPatternRestrictions = [
 	...featureFolders.map((folder) => ({
-		group: [`@/features/${folder}/*`],
+		group: [composeInvalidFeatureImportPattern(folder)],
 		message: `Use "@/features/${folder}" instead`,
 	})),
 	...packageFolders.map((folder) => ({
-		group: [`@/packages/${folder}/**`, `$${folder}/**`],
+		group: [
+			composePackageAtSignPath(folder),
+			composeDeepPathGlob(composePackageAtSignPath(folder)),
+			composeDeepPathGlob(composeDollarSignPath(folder)),
+		],
 		message: `Use the shorthand "$${folder}" instead`,
 	})),
-	...libs.map((lib) => ({
-		group: [`@/lib/${lib}/**`, `$${lib}/**`],
-		message: `Use the shorthand "$${lib}" instead`,
+	...libs.map((folder) => ({
+		group: [
+			composeLibAtSignPath(folder),
+			composeDeepPathGlob(composeLibAtSignPath(folder)),
+			composeDeepPathGlob(composeDollarSignPath(folder)),
+		],
+		message: `Use the shorthand "$${folder}" instead`,
 	})),
 ];
 
@@ -53,44 +75,48 @@ module.exports = {
 							},
 						],
 						patterns: universalPatternRestrictions.filter(
-							(pattern) => !pattern.group.includes(`@/features/${folder}/*`)
+							(pattern) =>
+								!pattern.group.includes(
+									composeInvalidFeatureImportPattern(folder)
+								)
 						),
 					},
 				],
 			},
 		})),
-		...packageFolders.map((packageFolder) => ({
-			files: [`src/packages/${packageFolder}/**/*.{ts,tsx}`],
+		...packageFolders.map((folder) => ({
+			files: [`src/packages/${folder}/**/*.{ts,tsx}`],
 			rules: {
 				"no-restricted-imports": [
 					"error",
 					{
 						paths: ["@/packages/", "$"].map((prefix) => ({
-							name: `${prefix}${packageFolder}`,
+							name: `${prefix}${folder}`,
 							message:
 								"A package cannot import from its own index file. Write out the full file path instead.",
 						})),
 						patterns: universalPatternRestrictions.filter(
 							(pattern) =>
-								!pattern.group.includes(`@/packages/${packageFolder}/**`)
+								!pattern.group.includes(composePackageAtSignPath(folder))
 						),
 					},
 				],
 			},
 		})),
-		...libs.map((lib) => ({
-			files: [`src/lib/${lib}/**/*.{ts,tsx}`],
+		...libs.map((folder) => ({
+			files: [`src/lib/${folder}/**/*.{ts,tsx}`],
 			rules: {
 				"no-restricted-imports": [
 					"error",
 					{
 						paths: ["@/lib/", "$"].map((prefix) => ({
-							name: `${prefix}${lib}`,
+							name: `${prefix}${folder}`,
 							message:
 								"A lib cannot import from its own index file. Write out the full file path instead.",
 						})),
 						patterns: universalPatternRestrictions.filter(
-							(pattern) => !pattern.group.includes(`@/lib/${lib}/**`)
+							(pattern) =>
+								!pattern.group.includes(composePackageAtSignPath(folder))
 						),
 					},
 				],

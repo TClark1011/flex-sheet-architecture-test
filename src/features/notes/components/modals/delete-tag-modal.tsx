@@ -12,14 +12,14 @@ import { useDeleteTagMutation } from "@/features/notes/hooks/note-mutation-hooks
 import { useNotePageParams } from "@/logic/page-param-helpers";
 import { useRenderLogger } from "@/hooks/use-render-logger";
 
-const useDeleteTagModalState = (): ModalProps => {
+const useDeleteTagModalState = () => {
 	const setTagIdTargetedForDelete = useUpdateAtom(tagIdTargetedForDeleteAtom);
 	const tagTargetedForDelete = useAtomValue(tagTargetedForDeleteSelectorAtom);
 
 	return {
 		isOpen: !!tagTargetedForDelete,
 		onClose: () => setTagIdTargetedForDelete(null),
-	};
+	} satisfies ModalProps;
 };
 
 export const DeleteTagModal: FC = () => {
@@ -35,7 +35,11 @@ export const DeleteTagModal: FC = () => {
 		<Modal {...modalStateProps} title="Delete tag?">
 			<p>Are you sure you want to delete this tag?</p>
 			<ModalActions>
-				<Button variant="ghost" disabled={tagIsBeingDeleted}>
+				<Button
+					variant="ghost"
+					disabled={tagIsBeingDeleted}
+					onClick={modalStateProps.onClose}
+				>
 					Cancel
 				</Button>
 				<Button
