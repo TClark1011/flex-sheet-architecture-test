@@ -1,7 +1,7 @@
 import React from "react";
 import type { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Badge } from "@/packages/ui/components/badge";
-import { iconArgType } from "@/packages/ui/internal/story-helpers";
+import { asArgType, iconArgType } from "@/packages/ui/internal/story-helpers";
 
 const config: ComponentMeta<typeof Badge> = {
 	title: "Badge",
@@ -9,9 +9,11 @@ const config: ComponentMeta<typeof Badge> = {
 	args: {
 		variant: "solid",
 		size: "md",
+		as: "span",
 	},
 	argTypes: {
 		icon: iconArgType,
+		as: asArgType,
 	},
 };
 

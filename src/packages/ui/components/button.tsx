@@ -1,8 +1,9 @@
+import type { UIComponent } from "@/packages/ui/internal/forward-ref";
+import { forwardRef } from "@/packages/ui/internal/forward-ref";
 import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
 import { colorSchemes, sizes, variants } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
 import type { PropsWithChildren } from "react";
-import { forwardRef } from "react";
 
 export type ButtonVariant = "ghost" | "link" | "outline" | "glass" | "solid";
 
@@ -100,49 +101,53 @@ export type ButtonProps = PropsWithChildren<
 	>
 >;
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-	(
-		{
-			children,
-			className,
-			leftIcon,
-			rightIcon,
-			size,
-			variant,
-			shape,
-			noAnimation,
-			disabled,
-			isLoading,
-			colorScheme,
-			...props
-		},
-		ref
-	) => {
-		return (
-			<button
-				type="button"
-				{...props}
-				disabled={disabled}
-				className={cx(
-					buttonClassName({
-						size,
-						variant,
-						shape,
-						noAnimation,
-						disabled,
-						isLoading,
-						colorScheme,
-					}),
-					className
-				)}
-				ref={ref}
-			>
-				{leftIcon}
-				{children}
-				{rightIcon}
-			</button>
-		);
-	}
-);
+const buttonElement = "button";
+
+export const Button: UIComponent<typeof buttonElement, ButtonProps> =
+	forwardRef(
+		(
+			{
+				children,
+				className,
+				leftIcon,
+				rightIcon,
+				size,
+				variant,
+				shape,
+				noAnimation,
+				disabled,
+				isLoading,
+				colorScheme,
+				as: Component = buttonElement,
+				...props
+			},
+			ref
+		) => {
+			return (
+				<Component
+					{...(Component === "button" && { type: "button" })}
+					{...props}
+					disabled={disabled}
+					className={cx(
+						buttonClassName({
+							size,
+							variant,
+							shape,
+							noAnimation,
+							disabled,
+							isLoading,
+							colorScheme,
+						}),
+						className
+					)}
+					ref={ref}
+				>
+					{leftIcon}
+					{children}
+					{rightIcon}
+				</Component>
+			);
+		}
+	);
 
 Button.displayName = "Button";

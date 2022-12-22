@@ -1,7 +1,8 @@
+import type { UIComponent } from "@/packages/ui/internal/forward-ref";
+import { forwardRef } from "@/packages/ui/internal/forward-ref";
 import type { ComponentProps } from "@/packages/ui/internal/ui-utils";
 import { colorSchemes, sizes, variants } from "@/packages/ui/internal/ui-utils";
 import { cva, cx } from "class-variance-authority";
-import { forwardRef } from "react";
 
 type BadgeVariant = "solid" | "outline" | "ghost";
 
@@ -42,12 +43,21 @@ export type BadgeProps = ComponentProps<
 	}
 >;
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
+export const Badge: UIComponent<"span", BadgeProps> = forwardRef(
 	(
-		{ className, colorScheme, size, variant, children, icon, ...props },
+		{
+			className,
+			colorScheme,
+			size,
+			variant,
+			children,
+			icon,
+			as: Component = "as",
+			...props
+		},
 		ref
 	) => (
-		<span
+		<Component
 			className={cx(
 				badgeClassNames({ size, variant, colorScheme, ...props }),
 				className
@@ -57,7 +67,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
 		>
 			{icon}
 			{children}
-		</span>
+		</Component>
 	)
 );
 

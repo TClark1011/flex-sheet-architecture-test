@@ -1,3 +1,4 @@
+import { HTML_TAG_ARRAY } from "$html-tag-array";
 import { D } from "@mobily/ts-belt";
 import type { ArgType } from "@storybook/addons";
 import {
@@ -32,4 +33,9 @@ export const hiddenArgType = {
 	table: {
 		disable: true,
 	},
+};
+
+export const asArgType: ArgType = {
+	options: HTML_TAG_ARRAY,
+	description: "The element to render as",
 };
