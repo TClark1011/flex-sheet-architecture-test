@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require("tailwindcss/plugin");
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
+const sansFontStack = ["Inter", ...fontFamily.sans];
 
 const defaultDaisyUiLightTheme = require("daisyui/src/colors/themes")[
 	"[data-theme=light]"
@@ -12,7 +14,12 @@ const defaultDaisyUiDarkTheme = require("daisyui/src/colors/themes")[
 module.exports = {
 	content: ["./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				sans: sansFontStack,
+				title: ["Comfortaa", ...sansFontStack],
+			},
+		},
 	},
 	plugins: [
 		require("daisyui"),

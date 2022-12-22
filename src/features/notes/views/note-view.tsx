@@ -19,17 +19,15 @@ export const NoteView: FC = () => {
 		<>
 			<SingleNoteQueryManager />
 
-			<RootLayout className="flex justify-center">
-				<div className="items-center container-[600px]">
-					<div className="mb-4 flex items-center justify-between">
-						<NoteTitleEdit />
-						{userCanEditNote && <NotePublicToggle />}
-					</div>
-
-					<NoteTagsEdit className="mb-2" />
-
-					<NoteContentEdit />
+			<RootLayout>
+				<div className="mb-4 flex items-center justify-between">
+					<NoteTitleEdit />
+					{userCanEditNote && <NotePublicToggle />}
 				</div>
+
+				<NoteTagsEdit className="mb-2" />
+
+				<NoteContentEdit />
 			</RootLayout>
 
 			<DeleteTagModal />

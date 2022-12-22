@@ -1,6 +1,6 @@
 import { noteRouter } from "@/server/trpc/router/note-router";
 import { router } from "../trpc";
-import { authRouter } from "./auth";
+import { authRouter } from "./auth-router";
 
 export const appRouter = router({
 	auth: authRouter,

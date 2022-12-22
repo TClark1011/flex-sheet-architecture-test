@@ -4,11 +4,12 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, FormControl, TextInput } from "$ui";
 import { zNonEmptyString } from "@/utils/utility-schemas";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { externalAuthProviders } from "@/features/auth/constants/external-auth-providers";
 import { ExternalAuthButton } from "@/features/auth/components/external-auth-button";
 import { useCallbackUrl } from "@/hooks/use-callback-url";
 import { RootLayout } from "@/components/layouts/root-layout";
+import { useSession } from "@/hooks/use-session";
 
 const signInFormSchema = z.object({
 	email: zNonEmptyString().email(),

@@ -42,10 +42,10 @@ export const UserNotesView: FC = () => {
 
 	return (
 		<>
-			<RootLayout>
+			<RootLayout fullWidth>
 				<div className="mb-8">
 					{notes.length > 0 && (
-						<div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+						<div className="grid grid-cols-[repeat(auto-fill,minmax(3#$00px,1fr))] gap-4">
 							{notes.map((note) => (
 								<div
 									tabIndex={0}

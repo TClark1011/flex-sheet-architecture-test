@@ -1,13 +1,21 @@
 import { Button, Navbar } from "$ui";
+import { useSession } from "@/hooks/use-session";
 import type { WithClassName } from "@/types/utility-types";
 import cx from "classnames";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { FC, PropsWithChildren } from "react";
 
-export type RootLayoutProps = PropsWithChildren & WithClassName;
-export const RootLayout: FC<RootLayoutProps> = ({ children, className }) => {
+export type RootLayoutProps = PropsWithChildren &
+	WithClassName & {
+		fullWidth?: boolean;
+	};
+export const RootLayout: FC<RootLayoutProps> = ({
+	children,
+	className,
+	fullWidth = false,
+}) => {
 	const { status: sessionStatus } = useSession();
 	const { pathname } = useRouter();
 
@@ -42,7 +50,18 @@ export const RootLayout: FC<RootLayoutProps> = ({ children, className }) => {
 					</>
 				}
 			/>
-			<div className={cx("flex-grow px-4 pt-4", className)}>{children}</div>
+			<div
+				className={cx(
+					"flex-grow px-4 pt-4",
+					!fullWidth && "flex justify-center",
+					fullWidth && className
+				)}
+			>
+				{fullWidth && children}
+				{!fullWidth && (
+					<div className={cx("container-[600px]", className)}>{children}</div>
+				)}
+			</div>
 		</main>
 	);
 };

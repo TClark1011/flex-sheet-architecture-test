@@ -13,6 +13,13 @@
 	],
 	"overrides": [
 		{
+			// allow .js and .cjs files to use require
+			"files": ["*.*{c,}js"],
+			"rules": {
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		},
+		{
 			"files": ["src/pages/**"],
 			"rules": {
 				"unicorn/filename-case": "off"
